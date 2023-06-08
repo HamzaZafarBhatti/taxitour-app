@@ -6,7 +6,7 @@ use App\Models\User;
 use App\Models\Country;
 use App\Models\Admin\Driver;
 use Illuminate\Http\Request;
-use Kreait\Firebase\Database;
+use Kreait\Firebase\Contract\Database;
 use App\Base\Constants\Auth\Role;
 use Illuminate\Support\Facades\DB;
 use App\Events\Auth\UserRegistered;

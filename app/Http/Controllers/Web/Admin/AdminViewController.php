@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Session;
 use App\Http\Controllers\Web\BaseController;
 use App\Models\Payment\DriverWallet;
-use Kreait\Firebase\Database;
+use Kreait\Firebase\Contract\Database;
 use App\Base\Constants\Setting\Settings;
 use Illuminate\Http\Request;
 use Mail; 

@@ -13,7 +13,7 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use App\Jobs\Notifications\AndroidPushNotification;
 use App\Transformers\Requests\TripRequestTransformer;
 use App\Transformers\Requests\CronTripRequestTransformer;
-use Kreait\Firebase\Database;
+use Kreait\Firebase\Contract\Database;
 use App\Jobs\Notifications\SendPushNotification;
 
 class SendRequestToNextDriversJob implements ShouldQueue

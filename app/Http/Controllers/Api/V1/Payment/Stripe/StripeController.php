@@ -27,7 +27,7 @@ use App\Models\Payment\OwnerWallet;
 use App\Models\Payment\OwnerWalletHistory;
 use App\Transformers\Payment\OwnerWalletTransformer;
 use App\Models\Request\Request as RequestModel;
-use Kreait\Firebase\Database;
+use Kreait\Firebase\Contract\Database;
 use App\Jobs\Notifications\SendPushNotification;
 
 /**

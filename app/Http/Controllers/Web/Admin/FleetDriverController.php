@@ -39,7 +39,7 @@ use App\Base\Constants\Masters\WalletRemarks;
 use Illuminate\Support\Str;
 use App\Models\Payment\WalletWithdrawalRequest;
 use App\Base\Constants\Setting\Settings;
-use Kreait\Firebase\Database;
+use Kreait\Firebase\Contract\Database;
 use App\Models\Admin\Owner;
 use App\Jobs\Notifications\SendPushNotification;
 

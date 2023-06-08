@@ -17,7 +17,7 @@ use App\Jobs\Notifications\AndroidPushNotification;
 use App\Base\Constants\Masters\DriverDocumentStatus;
 use App\Base\Services\ImageUploader\ImageUploaderContract;
 use App\Http\Requests\Admin\Driver\DriverDocumentUploadRequest;
-use Kreait\Firebase\Database;
+use Kreait\Firebase\Contract\Database;
 use App\Jobs\Notifications\SendPushNotification;
 
 class DriverDocumentController extends BaseController

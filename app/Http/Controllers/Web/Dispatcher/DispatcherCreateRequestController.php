@@ -19,7 +19,7 @@ use App\Transformers\Requests\TripRequestTransformer;
 use Carbon\Carbon;
 use App\Base\Constants\Setting\Settings;
 use Sk\Geohash\Geohash;
-use Kreait\Firebase\Database;
+use Kreait\Firebase\Contract\Database;
 use App\Jobs\Notifications\AndroidPushNotification;
 use App\Jobs\Notifications\SendPushNotification;
 

@@ -15,7 +15,7 @@ use App\Base\Constants\Masters\WalletRemarks;
 use App\Base\Constants\Masters\zoneRideType;
 use App\Base\Constants\Masters\PaymentType;
 use App\Models\Admin\CancellationReason;
-use Kreait\Firebase\Database;
+use Kreait\Firebase\Contract\Database;
 use App\Jobs\Notifications\SendPushNotification;
 
 /**
