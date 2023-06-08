@@ -50,6 +50,7 @@ class ChangeDriversToTrips extends Command
         $driver_timeout = 60;
 
         $request_meta = RequestMeta::whereRaw('TIME_TO_SEC(TIMEDIFF("'.date('Y-m-d H:i:s').'", updated_at)) > '.$driver_timeout." AND active=1")->get();
+        Log::info($request_meta);
         // $request_meta = RequestMeta::whereActive(true)->get();
 
         if (count($request_meta)==0) {

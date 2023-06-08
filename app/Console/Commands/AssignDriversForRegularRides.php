@@ -63,6 +63,7 @@ class AssignDriversForRegularRides extends Command
                     ->where('created_at', '>', $sub_5_min)
                     ->where('is_bid_ride',0)
                     ->where('is_completed', 0)->where('is_cancelled', 0)->where('is_driver_started', 0)->get();
+                    Log::info($requests);
         // dd($current_time);
 
         // dd($sub_5_min);
