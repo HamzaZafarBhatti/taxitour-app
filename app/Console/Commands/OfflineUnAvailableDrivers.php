@@ -3,7 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Models\Admin\Driver;
-use Kreait\Firebase\Database;
+use Kreait\Firebase\Contract\Database;
 use Illuminate\Support\Carbon;
 use Illuminate\Console\Command;
 use App\Jobs\Notifications\AndroidPushNotification;

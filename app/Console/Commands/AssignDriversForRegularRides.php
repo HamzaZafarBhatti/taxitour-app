@@ -17,7 +17,7 @@ use App\Transformers\Requests\TripRequestTransformer;
 use App\Transformers\Requests\CronTripRequestTransformer;
 use App\Models\Request\DriverRejectedRequest;
 use Sk\Geohash\Geohash;
-use Kreait\Firebase\Database;
+use Kreait\Firebase\Contract\Database;
 use Illuminate\Support\Facades\Log;
 use App\Jobs\Notifications\SendPushNotification;
 

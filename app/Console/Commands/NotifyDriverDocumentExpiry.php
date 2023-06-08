@@ -8,7 +8,7 @@ use App\Models\Admin\DriverDocument;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Mail;
-use Kreait\Firebase\Database;
+use Kreait\Firebase\Contract\Database;
 use App\Jobs\Notifications\SendPushNotification;
 
 class NotifyDriverDocumentExpiry extends Command
