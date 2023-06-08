@@ -15,7 +15,7 @@ use App\Models\Admin\FleetNeededDocument;
 use App\Transformers\Owner\FleetNeededDocumentTransformer;
 use App\Models\Admin\FleetDocument;
 use App\Jobs\Notifications\AndroidPushNotification;
-use Kreait\Firebase\Contract\Database;
+use Kreait\Firebase\Database;
 use App\Jobs\Notifications\SendPushNotification;
 
 class FleetController extends BaseController

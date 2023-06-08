@@ -11,7 +11,7 @@ use Illuminate\Http\Request;
 use App\Transformers\Driver\DriverTransformer;
 use App\Transformers\Owner\FleetTransformer;
 use App\Base\Services\ImageUploader\ImageUploaderContract;
-use Kreait\Firebase\Contract\Database;
+use Kreait\Firebase\Database;
 use App\Models\User;
 use App\Base\Constants\Auth\Role;
 use Illuminate\Support\Facades\DB;

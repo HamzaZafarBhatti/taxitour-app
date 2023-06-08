@@ -15,7 +15,7 @@ use App\Http\Requests\Request\AcceptRejectRequest;
 use App\Jobs\Notifications\AndroidPushNotification;
 use App\Transformers\Requests\TripRequestTransformer;
 use App\Models\Request\DriverRejectedRequest;
-use Kreait\Firebase\Contract\Database;
+use Kreait\Firebase\Database;
 use App\Jobs\Notifications\SendPushNotification;
 
 /**

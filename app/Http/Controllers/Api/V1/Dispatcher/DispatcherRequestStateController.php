@@ -19,7 +19,7 @@ use App\Jobs\Notifications\AndroidPushNotification;
 use App\Transformers\Requests\TripRequestTransformer;
 use App\Models\User;
 use Sk\Geohash\Geohash;
-use Kreait\Firebase\Contract\Database;
+use Kreait\Firebase\Database;
 use App\Base\Constants\Auth\Role;
 use Carbon\Carbon;
 use App\Http\Requests\Request\CancelTripRequest;

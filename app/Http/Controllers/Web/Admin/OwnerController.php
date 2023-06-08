@@ -21,7 +21,7 @@ use App\Models\Admin\OwnerDocument;
 use App\Models\Admin\OwnerNeededDocument;
 use App\Models\User;
 use Maatwebsite\Excel\Facades\Excel;
-use Kreait\Firebase\Contract\Database;
+use Kreait\Firebase\Database;
     
 use App\Models\Payment\OwnerWalletHistory;
 use App\Models\Payment\OwnerWallet;

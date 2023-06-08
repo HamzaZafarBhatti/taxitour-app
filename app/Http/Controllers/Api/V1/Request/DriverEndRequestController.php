@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Api\V1\Request;
 use App\Jobs\NotifyViaMqtt;
 use App\Models\Admin\Promo;
 use App\Jobs\NotifyViaSocket;
-use Kreait\Firebase\Contract\Database;
+use Kreait\Firebase\Database;
 use Illuminate\Support\Carbon;
 use App\Models\Admin\PromoUser;
 use App\Base\Constants\Masters\UnitType;

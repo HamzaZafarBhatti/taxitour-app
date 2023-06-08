@@ -6,7 +6,7 @@ use App\Events\Event;
 use App\AccountApproved;
 use App\AccountActivated;
 use Kreait\Firebase\Factory;
-use Kreait\Firebase\Contract\Database;
+use Kreait\Firebase\Database;
 use App\Http\Requests\User\EtaRequest;
 use App\Http\Controllers\ApiController;
 use App\Transformers\User\EtaTransformer;

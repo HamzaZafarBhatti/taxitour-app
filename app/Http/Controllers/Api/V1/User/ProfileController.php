@@ -16,7 +16,7 @@ use App\Base\Constants\Auth\Role;
 use App\Models\User;
 use App\Models\Request\FavouriteLocation;
 use App\Models\Payment\UserBankInfo;
-use Kreait\Firebase\Contract\Database;
+use Kreait\Firebase\Database;
 
 /**
  * @group Profile-Management
