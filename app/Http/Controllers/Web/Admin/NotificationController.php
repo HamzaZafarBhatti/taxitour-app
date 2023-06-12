@@ -61,7 +61,7 @@ class NotificationController extends BaseController
         $users = User::companyKey()->belongsToRole(Role::USER)->active()->get();
         $drivers = Driver::get();
 
-        if (env('APP_FOR')=='demo') {
+        if (env('APP_FOR') == 'demo') {
             $drivers = Driver::whereHas('user', function ($query) {
                 $query->where('company_key', auth()->user()->company_key);
             })->get();
@@ -77,7 +77,7 @@ class NotificationController extends BaseController
 
         //     return redirect('notifications/push')->with('warning', $message);
         // }
-        
+
         $created_params = $request->only(['title']);
         $created_params['push_enum'] = PushEnums::GENERAL_NOTIFICATION;
         $created_params['body'] = $request->message;
@@ -92,15 +92,15 @@ class NotificationController extends BaseController
         if ($request->has('user')) {
             $notification->update(['for_user' => true]);
 
-            User::whereIn('id', $request->user)->chunk(20, function ($userData) use ($notification,$request) {
+            User::whereIn('id', $request->user)->chunk(20, function ($userData) use ($notification, $request) {
                 $title = $notification->title;
                 $body = $notification->body;
-                $push_data = ['title' => $notification->title,'message' => $notification->body,'image' => $notification->push_image,'push_type'=>'general'];
+                $push_data = ['title' => $notification->title, 'message' => $notification->body, 'image' => $notification->push_image, 'push_type' => 'general'];
                 $image = $notification->push_image;
 
                 foreach ($userData as $key => $value) {
 
-                dispatch(new SendPushNotification($value,$title,$body,$push_data,$image));
+                    dispatch(new SendPushNotification($value, $title, $body, $push_data, $image));
                 }
             });
         }
@@ -108,15 +108,15 @@ class NotificationController extends BaseController
         if ($request->has('driver')) {
             $notification->update(['for_driver' => true]);
 
-            Driver::whereIn('id', $request->driver)->chunk(20, function ($driverData) use ($notification,$request) {
+            Driver::whereIn('id', $request->driver)->chunk(20, function ($driverData) use ($notification, $request) {
                 $title = $notification->title;
                 $body = $notification->body;
-                $push_data = ['title' => $notification->title,'message' => $notification->body,'image' => $notification->push_image,'push_type'=>'general'];
+                $push_data = ['title' => $notification->title, 'message' => $notification->body, 'image' => $notification->push_image, 'push_type' => 'general'];
                 $image = $notification->push_image;
 
                 foreach ($driverData as $key => $value) {
 
-                dispatch(new SendPushNotification($value->user,$title,$body,$push_data,$image));
+                    dispatch(new SendPushNotification($value->user, $title, $body, $push_data, $image));
                 }
             });
         }
