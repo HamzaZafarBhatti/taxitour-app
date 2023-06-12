@@ -56,7 +56,7 @@
 
 
                         @foreach ($translations as $k => $translation)
-                            <a class="{{ $translation->locale == session()->get('applocale') ? 'hover-blue' : '' }} dropdown-item chooseLanguage"
+                            <a class="{{ $translation->locale == App::currentLocale() ? 'hover-blue' : '' }} dropdown-item chooseLanguage"
                                 href="#" data-value="{{ $translation->locale }}">
                                 <li class="header">
                                     {{ ucfirst($translation->locale) }}
