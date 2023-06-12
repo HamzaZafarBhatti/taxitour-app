@@ -6,16 +6,16 @@
 
 <header class="main-header">
     <!-- Logo -->
-    <a href="#" class="logo">
+    <a href="#" class="logo" style="height: 92px; padding: 0;">
+        <img src="{{ app_logo() ?? asset('images/email/logo.svg') }}" {{-- style="width: 40px;padding-right: 5px;" --}}
+            alt="logo">
         <!-- mini logo -->
-        <b class="logo-mini">
-             <span class="light-logo" style="display: flex;align-items: end;"><img
-                     src="{{ app_logo() ?? asset('images/email/logo.svg') }}" style="width: 40px;padding-right: 5px;"
-                     alt="logo">{{-- {{ app_name() ?? 'Tagxi' }} --}}</span>
+        {{-- <b class="logo-mini">
+            <span class="light-logo" style="display: flex;align-items: end;">{{ app_name() ?? 'Tagxi' }}</span>
 
-         </b>
-         <!-- logo-->
-         <!--  <span class="logo-lg">
+        </b> --}}
+        <!-- logo-->
+        <!--  <span class="logo-lg">
              <img src="{{ app_logo() ?? asset('assets/images/logo-light-text.png') }}" alt="logo" class="light-logo">
              <img src="{{ app_logo() ?? asset('assets/images/logo-dark-text.png') }}" alt="logo" class="dark-logo">
          </span> -->
@@ -49,29 +49,30 @@
                     </a>
                     <ul class="dropdown-menu scale-up">
                         @php
-                            $translations = \DB::table('ltm_translations')->groupBy('locale')->get();
+                            $translations = \DB::table('ltm_translations')
+                                ->groupBy('locale')
+                                ->get();
                         @endphp
 
 
 
                         @foreach ($translations as $k => $translation)
                             <a class="{{ $translation->locale == session()->get('applocale') ? 'hover-blue' : '' }} dropdown-item chooseLanguage"
-                               href="#" data-value="{{ $translation->locale  }}">
+                                href="#" data-value="{{ $translation->locale }}">
                                 <li class="header">
-                                    {{ ucfirst($translation->locale ) }}
+                                    {{ ucfirst($translation->locale) }}
                                 </li>
                             </a>
                         @endforeach
 
                         <!--       @foreach (config('app.app_lang') as $k => $v)
-                            <a class="{{ $k == session()->get('applocale') ? 'hover-blue' : '' }} dropdown-item chooseLanguage"
+<a class="{{ $k == session()->get('applocale') ? 'hover-blue' : '' }} dropdown-item chooseLanguage"
                                  href="#" data-value="{{ $k }}">
                                  <li class="header">
                                      {{ ucfirst($v) }}
                             </li>
                         </a>
-
-                        @endforeach -->
+@endforeach -->
                     </ul>
                 </li>
 
@@ -79,13 +80,13 @@
                 <li class="dropdown user user-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         <img src="{{ auth()->user()->profile_picture ?: asset('/assets/img/user-dummy.svg') }}"
-                             class="user-image rounded-circle" alt="User Image">
+                            class="user-image rounded-circle" alt="User Image">
                     </a>
                     <ul class="dropdown-menu scale-up">
                         <!-- User image -->
                         <li class="user-header d-flex">
                             <img src="{{ auth()->user()->profile_picture ?: asset('/assets/img/user-dummy.svg') }}"
-                                 class="float-left rounded-circle" alt="User Image">
+                                class="float-left rounded-circle" alt="User Image">
 
                             <p class="pt-1 pl-2">
                                 <span>{{ auth()->user()->name }}</span>
