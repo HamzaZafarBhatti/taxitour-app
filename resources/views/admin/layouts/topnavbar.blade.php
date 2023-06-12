@@ -7,8 +7,7 @@
 <header class="main-header">
     <!-- Logo -->
     <a href="#" class="logo" style="height: 92px; padding: 0;">
-        <img src="{{ app_logo() ?? asset('images/email/logo.svg') }}" {{-- style="width: 40px;padding-right: 5px;" --}}
-            alt="logo">
+        <img src="{{ app_logo() ?? asset('images/email/logo.svg') }}" {{-- style="width: 40px;padding-right: 5px;" --}} alt="logo">
         <!-- mini logo -->
         {{-- <b class="logo-mini">
             <span class="light-logo" style="display: flex;align-items: end;">{{ app_name() ?? 'Tagxi' }}</span>
@@ -65,14 +64,14 @@
                             </a>
                         @endforeach
 
-                        <!--       @foreach (config('app.app_lang') as $k => $v)
-<a class="{{ $k == session()->get('applocale') ? 'hover-blue' : '' }} dropdown-item chooseLanguage"
-                                 href="#" data-value="{{ $k }}">
-                                 <li class="header">
-                                     {{ ucfirst($v) }}
-                            </li>
-                        </a>
-@endforeach -->
+                        @foreach (config('app.app_lang') as $k => $v)
+                            <a class="{{ $k == session()->get('applocale') ? 'hover-blue' : '' }} dropdown-item chooseLanguage"
+                                href="#" data-value="{{ $k }}">
+                                <li class="header">
+                                    {{ ucfirst($v) }}
+                                </li>
+                            </a>
+                        @endforeach
                     </ul>
                 </li>
 

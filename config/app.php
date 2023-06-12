@@ -87,8 +87,8 @@ return [
 
     'app_lang' => [
         'en' => 'english',
-        'spa' => 'spanish',
-        'ar' => 'arabic',
+        'es' => 'spanish',
+        // 'ar' => 'arabic',
     ],
 
     /*
