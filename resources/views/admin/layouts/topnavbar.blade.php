@@ -64,14 +64,14 @@
                             </a>
                         @endforeach
 
-                        @foreach (config('app.app_lang') as $k => $v)
+                        {{-- @foreach (config('app.app_lang') as $k => $v)
                             <a class="{{ $k == session()->get('applocale') ? 'hover-blue' : '' }} dropdown-item chooseLanguage"
                                 href="#" data-value="{{ $k }}">
                                 <li class="header">
                                     {{ ucfirst($v) }}
                                 </li>
                             </a>
-                        @endforeach
+                        @endforeach --}}
                     </ul>
                 </li>
 
