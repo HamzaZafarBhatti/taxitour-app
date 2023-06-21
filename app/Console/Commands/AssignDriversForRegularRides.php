@@ -56,7 +56,7 @@ class AssignDriversForRegularRides extends Command
     public function handle()
     {
         $current_time = Carbon::now()->format('Y-m-d H:i:s');
-        Log::info($uncompleted_requests);
+        Log::info($current_time);
         $sub_5_min = Carbon::now()->subMinutes(20)->format('Y-m-d H:i:s');
         // DB::enableQueryLog();
         $requests = Request::where('is_later', 0)
