@@ -61,7 +61,7 @@ class AssignDriversForScheduledRides extends Command
         $uncompleted_requests = Request::where('is_later', 1)
             ->whereDate('trip_start_time', '<', date('Y-m-d H:i:s'))
             ->where('is_completed', 0)->where('is_cancelled', 0)->where('is_driver_started', 0)->get();
-        Log::info($uncompleted_requests);
+        // Log::info($uncompleted_requests);
         if ($uncompleted_requests) {
             foreach ($uncompleted_requests as $uncompleted_request) {
                 $update_parms['is_cancelled'] = true;
