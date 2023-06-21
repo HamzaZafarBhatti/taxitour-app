@@ -50,29 +50,27 @@ class NotifyDriverDocumentExpiry extends Command
         foreach ($driverDocuments as $doc) {
             $docExpiryDate = $doc->getOriginal('expiry_date');
 
-                    
-                    if($doc->driver->approve){
-                        $doc->driver->update([
-                        'approve' => false
-                    ]);
 
-                    $doc->update([
+            if ($doc->driver->approve) {
+                $doc->driver->update([
+                    'approve' => false
+                ]);
+
+                $doc->update([
                     'document_status' => DriverDocumentStatus::EXPIRED_AND_DECLINED
-                    ]);
+                ]);
 
-                    $notifable_driver = $doc->driver->user;
+                $notifable_driver = $doc->driver->user;
 
-                    $title = trans('push_notifications.document_expired_title',[],$notifable_driver->lang);
-                    $body = trans('push_notifications.document_expired_body',[],$notifable_driver->lang);
+                $title = trans('push_notifications.document_expired_title', [], $notifable_driver->lang);
+                $body = trans('push_notifications.document_expired_body', [], $notifable_driver->lang);
 
-                    dispatch(new SendPushNotification($notifable_driver,$title,$body));
+                dispatch(new SendPushNotification($notifable_driver, $title, $body));
 
-                    $this->database->getReference('drivers/'.$doc->driver->id)->update(['   approve'=>0,'updated_at'=> Database::SERVER_TIMESTAMP]);
+                $this->database->getReference('drivers/' . $doc->driver->id)->update(['   approve' => 0, 'updated_at' => Database::SERVER_TIMESTAMP]);
 
-                    $this->info('Declined successfully');
-                
-                    }
-                    
+                $this->info('Declined successfully');
+            }
         }
 
         $this->info('Command run successfully');

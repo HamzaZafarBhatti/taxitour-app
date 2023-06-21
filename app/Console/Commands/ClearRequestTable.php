@@ -32,7 +32,6 @@ class ClearRequestTable extends Command
     public function __construct()
     {
         parent::__construct();
-
     }
 
     /**
@@ -44,9 +43,8 @@ class ClearRequestTable extends Command
     {
         $date = Carbon::now()->subDays(30);
 
-        $request = Request::where( 'created_at', '<', $date)->delete();
+        $request = Request::where('created_at', '<', $date)->delete();
 
-       $this->info('Records cleard ');
-
+        $this->info('Records cleard ');
     }
 }
