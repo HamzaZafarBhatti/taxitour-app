@@ -20,9 +20,9 @@ class AdminSeeder extends Seeder
         $password= 123456789;
         $mobile = 9999999999;
 
-        // $users = User::all();
+        $users = User::all();
 
-        // if (sizeof($users)==0) {
+        if (sizeof($users)==0) {
             $user = User::create([
             'name' => $name,
             'email' => $email,
@@ -36,6 +36,6 @@ class AdminSeeder extends Seeder
         
         $user->admin()->create($created_params);
 
-        // }
+        }
     }
 }
