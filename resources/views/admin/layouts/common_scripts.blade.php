@@ -300,7 +300,6 @@ if (session()->has('warning')) {
 
         $('.sosList').html('')
         $('.sosicon').removeClass('active')
-        console.log(sosData);
         Object.entries(sosData).forEach(([key, val]) => {
             var area = val.serv_loc_id
 
