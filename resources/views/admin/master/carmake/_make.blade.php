@@ -20,8 +20,10 @@
            
             @if($result->vehicle_make_for == 'taxi')
             <td>{{ 'Taxi' }}</td>
-            @else
+            @elseif($result->vehicle_make_for == 'motor_bike')
             <td>{{ 'Motor Bike' }}</td>
+            @else
+            <td>Null</td>
             @endif
 
 
