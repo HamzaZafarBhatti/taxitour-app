@@ -486,7 +486,7 @@ class DriverController extends BaseController
         $card['amount_spent'] = ['name' => 'amount_spent', 'display_name' => 'Spend Amount ', 'count' => "0", 'icon' => 'fa fa-ban text-red'];
         $card['balance_amount'] = ['name' => 'balance_amount', 'display_name' => 'Balance Amount', 'count' => "0", 'icon' => 'fa fa-ban text-red'];
 
-         $history = UserWalletHistory::where('user_id',$driver->id)->orderBy('created_at','desc')->paginate(10);
+         $history = UserWalletHistory::where('user_id',$user->id)->orderBy('created_at','desc')->paginate(10);
         }
         else{
          $card = [];
