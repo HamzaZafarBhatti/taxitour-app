@@ -300,7 +300,6 @@ if (session()->has('warning')) {
 
         $('.sosList').html('')
         $('.sosicon').removeClass('active')
-        console.log(sosData);
         Object.entries(sosData).forEach(([key, val]) => {
             var area = val.serv_loc_id
 
@@ -338,7 +337,13 @@ if (session()->has('warning')) {
                             document.querySelector('#js-request-partial-target').innerHTML =
                                 html
                         });
+                } else {
+
+                    $('.sosList').append(`No Data`);
                 }
+            } else {
+
+                $('.sosList').append(`No Data`);
             }
         });
     });
