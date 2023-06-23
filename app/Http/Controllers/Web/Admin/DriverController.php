@@ -42,6 +42,7 @@ use App\Base\Constants\Setting\Settings;
 use Kreait\Firebase\Contract\Database;
 use App\Jobs\Notifications\SendPushNotification;
 use App\Imports\DriversImport;
+use App\Models\Payment\UserWalletHistory;
 use Maatwebsite\Excel\Facades\Excel;
 
 /**
