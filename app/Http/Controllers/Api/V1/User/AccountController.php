@@ -10,7 +10,6 @@ use App\Transformers\User\UserTransformer;
 use App\Transformers\Driver\DriverProfileTransformer;
 use App\Transformers\Owner\OwnerProfileTransformer;
 use App\Transformers\User\DispatcherTransformer;
-use Illuminate\Support\Facades\Log;
 
 class AccountController extends ApiController
 {
@@ -26,8 +25,6 @@ class AccountController extends ApiController
 
         $user = auth()->user();
 
-        Log::info($user);
-
         if (auth()->user()->hasRole(Role::DRIVER)) {
 
             $driver_details = $user->driver;
@@ -37,7 +34,6 @@ class AccountController extends ApiController
         } else if(auth()->user()->hasRole(Role::USER)) {
 
             $user = fractal($user, new UserTransformer)->parseIncludes(['onTripRequest.driverDetail','onTripRequest.requestBill','metaRequest.driverDetail','favouriteLocations','laterMetaRequest.driverDetail']);
-            Log::info($user);
         }else{
 
             $owner_details = $user->owner;

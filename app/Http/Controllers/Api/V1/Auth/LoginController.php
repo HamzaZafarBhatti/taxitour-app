@@ -38,7 +38,7 @@ class LoginController extends BaseLoginController
      */
     public function loginUser(GenericAppLoginRequest $request)
     {
-        return $this->loginUserAccountApp($request, Role::USER, [], 'api');
+        return $this->loginUserAccountApp($request, Role::USER);
     }
 
     /**
@@ -47,7 +47,7 @@ class LoginController extends BaseLoginController
      *
      * @param \App\Http\Requests\Auth\App\GenericAppLoginRequest $request
      * @return \Illuminate\Http\JsonResponse
-     * @bodyParam email string optional email of the user entered
+      * @bodyParam email string optional email of the user entered
      * @bodyParam mobile string optional mobile of the user entered
      * @bodyParam social_unique_id string optional mobile of the user entered
      * @bodyParam password string optional password of the user entered
@@ -64,15 +64,16 @@ class LoginController extends BaseLoginController
     public function loginDriver(GenericAppLoginRequest $request)
     {
 
-        if ($request->has('role') && $request->role == 'driver') {
-            return $this->loginUserAccountApp($request, Role::DRIVER, [], 'api');
+        if($request->has('role') && $request->role=='driver'){
+            return $this->loginUserAccountApp($request, Role::DRIVER);
         }
 
-        if ($request->has('role') && $request->role == 'owner') {
-            return $this->loginUserAccountApp($request, Role::OWNER, [], 'api');
+        if($request->has('role') && $request->role=='owner'){
+            return $this->loginUserAccountApp($request, Role::OWNER);
         }
+            
+        return $this->loginUserAccountApp($request, Role::DRIVER);
 
-        return $this->loginUserAccountApp($request, Role::DRIVER, [], 'api');
     }
 
 
@@ -96,11 +97,11 @@ class LoginController extends BaseLoginController
     }
 
     /**
-     * Social auth
-     * @bodyParam device_token string optional fcm_token for push notification
-     * @bodyParam login_by string required i.e android,ios
-     * @bodyParam oauth_token string required from social provider
-     * @return \Illuminate\Http\JsonResponse
+    * Social auth
+    * @bodyParam device_token string optional fcm_token for push notification
+    * @bodyParam login_by string required i.e android,ios
+    * @bodyParam oauth_token string required from social provider
+    * @return \Illuminate\Http\JsonResponse
 
      * @response {
     "token_type": "Bearer",
@@ -126,17 +127,17 @@ class LoginController extends BaseLoginController
         $user->social_avatar = $social_user->avatar;
         $user->social_avatar_original = $social_user->avatar_original;
         $user->login_by = $request->input('login_by');
-        $user->fcm_token = $request->input('device_token') ?: null;
+        $user->fcm_token = $request->input('device_token')?:null;
         $user->save();
         $client_tokens = DB::table('oauth_clients')->where('personal_access_client', 1)->first();
 
         return $this->issueToken([
-            'grant_type' => 'personal_access',
-            'client_id' => $client_tokens->id,
-            'client_secret' => $client_tokens->secret,
-            'user_id' => $user->id,
-            'scope' => [],
-        ]);
+                'grant_type' => 'personal_access',
+                'client_id' => $client_tokens->id,
+                'client_secret' => $client_tokens->secret,
+                'user_id' => $user->id,
+                'scope' => [],
+            ]);
     }
 
 
@@ -169,10 +170,10 @@ class LoginController extends BaseLoginController
     }
 
     /**
-     * Obtain the user information from GitHub.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    * Obtain the user information from GitHub.
+    *
+    * @return \Illuminate\Http\Response
+    */
     public function handleProviderCallback()
     {
         $user = Socialite::driver('facebook')->user();
@@ -193,7 +194,7 @@ class LoginController extends BaseLoginController
     {
         $user = auth()->user();
 
-        $user->fcm_token = null;
+        $user->fcm_token=null;
         $user->save();
 
         auth()->user()->token()->revoke();
@@ -225,9 +226,9 @@ class LoginController extends BaseLoginController
 
         $otp = $user->getCreatedOTP();
         /**
-         * Send OTP here
-         * Temporary logger
-         */
+        * Send OTP here
+        * Temporary logger
+        */
         \Log::info("Login OTP for {$mobile} is : {$otp}");
 
         return $this->respondSuccess(['uuid' => $user->getCreatedOTPUuid()]);
