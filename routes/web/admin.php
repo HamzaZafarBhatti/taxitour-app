@@ -126,7 +126,7 @@ Route::middleware('auth:web')->group(function () {
     });
 
     // Driver Management
-    Route::group(['prefix' => 'company/drivers','namespace'=>'Company', 'as' => 'company.drivers'], function () {
+    Route::group(['prefix' => 'company/drivers','namespace'=>'Company'], function () {
         // prefix('drivers')->group(function () {
         Route::get('/', 'DriverController@index')->name('companyDriverView');
         Route::get('/fetch', 'DriverController@getAllDrivers');
@@ -139,7 +139,7 @@ Route::middleware('auth:web')->group(function () {
         Route::get('toggle_available/{driver}', 'DriverController@toggleAvailable');
         Route::get('delete/{driver}', 'DriverController@delete');
         Route::get('document/view/{driver}', 'DriverDocumentController@index')->name('companyDriverDocumentView');
-        Route::get('get/carmodel', 'DriverController@getCarModel')->name('getCarModel');
+        Route::get('get/carmodel', 'DriverController@getCarModel')->name('company.drivers.getCarModel');
         Route::get('profile/{driver}', 'DriverController@profile');
         Route::get('hire/view', 'DriverController@hireDriverView')->name('hireDriverView');
         Route::post('hire', 'DriverController@hireDriver')->name('hireDriver');
@@ -216,7 +216,7 @@ Route::middleware('auth:web')->group(function () {
 
 //drivers
 
-    Route::group(['prefix' => 'drivers', 'as' => 'drivers'], function () {
+    Route::group(['prefix' => 'drivers'], function () {
         // prefix('drivers')->group(function () {
         Route::get('/', 'DriverController@index');
         Route::get('/fetch/approved', 'DriverController@getApprovedDrivers');
@@ -242,7 +242,7 @@ Route::middleware('auth:web')->group(function () {
         Route::get('upload/document/{driver}/{needed_document}', 'DriverDocumentController@documentUploadView');
         Route::post('upload/document/{driver}/{needed_document}', 'DriverDocumentController@uploadDocument');
         Route::post('approve/documents', 'DriverDocumentController@approveDriverDocument')->name('approveDriverDocument');
-        Route::get('get/carmodel', 'DriverController@getCarModel')->name('getCarModel');
+        Route::get('get/carmodel', 'DriverController@getCarModel')->name('drivers.getCarModel');
         Route::post('update/decline/reason', 'DriverController@UpdateDriverDeclineReason')->name('UpdateDriverDeclineReason');
         Route::post('/import-driver', 'DriverController@importDriver'); 
         Route::get('/download', 'DriverController@downloadFile');  
@@ -264,7 +264,7 @@ Route::middleware('auth:web')->group(function () {
 
 //Fleet drivers
 
-    Route::group(['prefix' => 'fleet-drivers', 'as' => 'fleet.drivers'], function () {
+    Route::group(['prefix' => 'fleet-drivers'], function () {
         // prefix('drivers')->group(function () {
         Route::get('/', 'FleetDriverController@index');
         Route::get('/fetch/approved', 'FleetDriverController@getApprovedFleetDrivers');
@@ -290,7 +290,7 @@ Route::middleware('auth:web')->group(function () {
         Route::get('upload/document/{driver}/{needed_document}', 'FleetDriverDocumentController@documentUploadView');
         Route::post('upload/document/{driver}/{needed_document}', 'FleetDriverDocumentController@uploadDocument');
         Route::post('approve/documents', 'FleetDriverDocumentController@approveFleetDriverDocument')->name('approveFleetDriverDocument');
-        Route::get('get/carmodel', 'FleetDriverController@getCarModel')->name('getCarModel');
+        Route::get('get/carmodel', 'FleetDriverController@getCarModel')->name('fleet-drivers.getCarModel');
         Route::post('update/decline/reason', 'FleetDriverController@UpdateDriverDeclineReason')->name('UpdateFleetDriverDeclineReason');
        
         });
