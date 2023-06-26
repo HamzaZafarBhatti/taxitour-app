@@ -38,7 +38,6 @@ class LoginController extends BaseLoginController
      */
     public function loginUser(GenericAppLoginRequest $request)
     {
-        session()->put('auth_guard', 'api');
         return $this->loginUserAccountApp($request, Role::USER);
     }
 
