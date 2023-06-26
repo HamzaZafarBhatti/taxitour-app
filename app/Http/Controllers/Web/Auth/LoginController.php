@@ -440,7 +440,7 @@ class LoginController extends ApiController
      * @param bool $needsToken
      * @return \Illuminate\Http\Response|\Illuminate\Http\JsonResponse
      */
-    protected function authenticateAndRespond(User $user, $request, $needsToken = false, $auth)
+    protected function authenticateAndRespond(User $user, $request, $needsToken = false, $auth = 'web')
     {
         event(new UserLogin($user));
         
