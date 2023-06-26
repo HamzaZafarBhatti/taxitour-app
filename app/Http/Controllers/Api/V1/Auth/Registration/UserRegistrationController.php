@@ -69,20 +69,19 @@ class UserRegistrationController extends LoginController
      * @param \App\Models\User $user
      * @param \App\Base\Services\OTP\Handler\OTPHandlerContract $otpHandler
      */
-    public function __construct(User $user, OTPHandlerContract $otpHandler, Country $country, SMSContract $smsContract,ImageUploaderContract $imageUploader)
+    public function __construct(User $user, OTPHandlerContract $otpHandler, Country $country, SMSContract $smsContract, ImageUploaderContract $imageUploader)
     {
         $this->user = $user;
         $this->otpHandler = $otpHandler;
         $this->country = $country;
         $this->smsContract = $smsContract;
         $this->imageUploader = $imageUploader;
-
     }
 
     /**
      * Register the user and send welcome email.
      * @bodyParam name string required name of the user
-    * @bodyParam company_key string optional company key of demo
+     * @bodyParam company_key string optional company key of demo
      * @bodyParam mobile integer required mobile of user
      * @bodyParam email email required email of the user
      * @bodyParam password password required password provided user
@@ -97,8 +96,8 @@ class UserRegistrationController extends LoginController
      */
     public function register(UserRegistrationRequest $request)
     {
-// dd($request);
-        
+        // dd($request);
+
         $mobileUuid = $request->input('uuid');
 
         $country_id =  $this->country->where('code', $request->input('country'))->pluck('id')->first();
@@ -107,12 +106,11 @@ class UserRegistrationController extends LoginController
 
         if ($validate_exists_email) {
 
-             if($request->is_web){
+            if ($request->is_web) {
 
                 $user = $this->user->belongsTorole(Role::USER)->where('email', $request->email)->first();
-                
-                return $this->authenticateAndRespond($user, $request, $needsToken=true, 'api');
 
+                return $this->authenticateAndRespond($user, $request, $needsToken = true);
             }
             $this->throwCustomException('Provided email has already been taken');
         }
@@ -124,12 +122,11 @@ class UserRegistrationController extends LoginController
 
         if ($validate_exists_mobile) {
 
-            if($request->is_web){
+            if ($request->is_web) {
 
                 $user = $this->user->belongsTorole(Role::USER)->where('mobile', $mobile)->first();
 
-                return $this->authenticateAndRespond($user, $request, $needsToken=true, 'api');
-
+                return $this->authenticateAndRespond($user, $request, $needsToken = true);
             }
             $this->throwCustomException('Provided mobile has already been taken');
         }
@@ -163,20 +160,20 @@ class UserRegistrationController extends LoginController
             'email' => $request->input('email'),
             'mobile' => $mobile,
             'mobile_confirmed' => true,
-            'fcm_token'=>$request->input('device_token'),
-            'login_by'=>$request->input('login_by'),
-            'country'=>$country_id,
-            'refferal_code'=>str_random(6),
-            'profile_picture'=>$profile_picture,
-            'lang'=>$request->input('lang')
+            'fcm_token' => $request->input('device_token'),
+            'login_by' => $request->input('login_by'),
+            'country' => $country_id,
+            'refferal_code' => str_random(6),
+            'profile_picture' => $profile_picture,
+            'lang' => $request->input('lang')
         ];
 
-        if($request->has('is_bid_app')){
+        if ($request->has('is_bid_app')) {
 
-            $user_params['is_bid_app']=1;
+            $user_params['is_bid_app'] = 1;
         }
 
-        if (env('APP_FOR')=='demo' && $request->has('company_key') && $request->input('company_key')) {
+        if (env('APP_FOR') == 'demo' && $request->has('company_key') && $request->input('company_key')) {
             $user_params['company_key'] = $request->input('company_key');
         }
         if ($request->has('password') && $request->input('password')) {
@@ -187,7 +184,7 @@ class UserRegistrationController extends LoginController
         // $this->otpHandler->delete($mobileUuid);
 
         // Create Empty Wallet to the user
-        $user->userWallet()->create(['amount_added'=>0]);
+        $user->userWallet()->create(['amount_added' => 0]);
 
         $user->attachRole(Role::USER);
 
@@ -216,7 +213,7 @@ class UserRegistrationController extends LoginController
         //     return $this->respondBadRequest('Unknown error occurred. Please try again later or contact us if it continues.');
         // }
 
-    /*mail Template*/
+        /*mail Template*/
         // $user_name = $user->name;
         // $mail_template = MailTemplate::where('mail_type', 'welcome_mail')->first();
 
@@ -233,11 +230,11 @@ class UserRegistrationController extends LoginController
         // dispatch(new SendMailNotification($mail_template, $user_mail));
 
 
-    
-    /*mail Template*/
+
+        /*mail Template*/
 
         if ($user) {
-            return $this->authenticateAndRespond($user, $request, $needsToken=true, 'api');
+            return $this->authenticateAndRespond($user, $request, $needsToken = true, 'api');
         }
         return $this->respondBadRequest('Unknown error occurred. Please try again later or contact us if it continues.');
 
@@ -245,14 +242,14 @@ class UserRegistrationController extends LoginController
     }
 
     /**
-    * Validate Mobile-For-User
-    * @bodyParam mobile integer required mobile of user
+     * Validate Mobile-For-User
+     * @bodyParam mobile integer required mobile of user
      * @response {
      * "success":true,
      * "message":"mobile_validated",
      * }
-    *
-    */
+     *
+     */
     public function validateUserMobile(Request $request)
     {
         $mobile = $request->mobile;
@@ -266,15 +263,15 @@ class UserRegistrationController extends LoginController
         return $this->respondSuccess(null, 'mobile_validated');
     }
     /**
-    * Validate Mobile-For-User-Login
-    * @bodyParam mobile integer required mobile of user
-    * @response {
-    * "success":true,
-    * "message":"mobile_exists",
-    * }
-    *
-    */
-     public function validateUserMobileForLogin(Request $request)
+     * Validate Mobile-For-User-Login
+     * @bodyParam mobile integer required mobile of user
+     * @response {
+     * "success":true,
+     * "message":"mobile_exists",
+     * }
+     *
+     */
+    public function validateUserMobileForLogin(Request $request)
     {
         $mobile = $request->mobile;
 
@@ -289,13 +286,13 @@ class UserRegistrationController extends LoginController
 
 
     /**
-    * Add Commission to the referred user
-    *
-    */
+     * Add Commission to the referred user
+     *
+     */
     public function addCommissionToRefferedUser($reffered_user)
     {
         $user_wallet = $reffered_user->userWallet;
-        $referral_commision = get_settings('referral_commision_for_user')?:0;
+        $referral_commision = get_settings('referral_commision_for_user') ?: 0;
 
         $user_wallet->amount_added += $referral_commision;
         $user_wallet->amount_balance += $referral_commision;
@@ -303,17 +300,18 @@ class UserRegistrationController extends LoginController
 
         // Add the history
         $reffered_user->userWalletHistory()->create([
-            'amount'=>$referral_commision,
-            'transaction_id'=>str_random(6),
-            'remarks'=>WalletRemarks::REFERRAL_COMMISION,
-            'refferal_code'=>$reffered_user->refferal_code,
-            'is_credit'=>true]);
+            'amount' => $referral_commision,
+            'transaction_id' => str_random(6),
+            'remarks' => WalletRemarks::REFERRAL_COMMISION,
+            'refferal_code' => $reffered_user->refferal_code,
+            'is_credit' => true
+        ]);
 
         // Notify user
-        $title = trans('push_notifications.referral_earnings_notify_title',[],$reffered_user->lang);
-        $body = trans('push_notifications.referral_earnings_notify_body',[],$reffered_user->lang);
+        $title = trans('push_notifications.referral_earnings_notify_title', [], $reffered_user->lang);
+        $body = trans('push_notifications.referral_earnings_notify_body', [], $reffered_user->lang);
 
-        dispatch(new SendPushNotification($reffered_user,$title,$body));
+        dispatch(new SendPushNotification($reffered_user, $title, $body));
     }
 
 
@@ -354,7 +352,7 @@ class UserRegistrationController extends LoginController
 
             $otp = $this->otpHandler->getOtp();
             // Generate sms from template
-            $sms = sms_template('generic-otp', ['otp'=>$otp,'mobile'=>$mobileForOtp], 'en');
+            $sms = sms_template('generic-otp', ['otp' => $otp, 'mobile' => $mobileForOtp], 'en');
             // Send sms by providers
             $this->smsContract->queueOn('default', $mobile, $sms);
             // $this->dispatch(new OtpNotification($mobile, $otp, $sms));
@@ -376,7 +374,7 @@ class UserRegistrationController extends LoginController
 
         // return $this->respondSuccess(['uuid' => $this->otpHandler->getUuid()]);
 
-        return response()->json(['success'=>true,'message'=>'success','message_keyword'=>'otp_sent_successfuly','data'=>['uuid' => $this->otpHandler->getUuid()]]);
+        return response()->json(['success' => true, 'message' => 'success', 'message_keyword' => 'otp_sent_successfuly', 'data' => ['uuid' => $this->otpHandler->getUuid()]]);
     }
 
     /**
@@ -398,13 +396,13 @@ class UserRegistrationController extends LoginController
 
         if (!$this->otpHandler->validate($otp, $uuid)) {
             $message = $this->otpHandler->isExpired() ?
-            'The otp provided has expired.' :
-            'The otp provided is invalid.';
+                'The otp provided has expired.' :
+                'The otp provided is invalid.';
 
             $this->throwCustomValidationException($message, $otpField);
         }
 
         // return $this->respondSuccess();
-        return response()->json(['success'=>true,'message'=>'success','message_keyword'=>'otp_validated_successfuly']);
+        return response()->json(['success' => true, 'message' => 'success', 'message_keyword' => 'otp_validated_successfuly']);
     }
 }
