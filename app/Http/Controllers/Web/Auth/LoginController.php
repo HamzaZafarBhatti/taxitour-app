@@ -144,9 +144,9 @@ class LoginController extends ApiController
      * @param array $conditions
      * @return \Illuminate\Http\JsonResponse
      */
-    protected function loginUserAccountApp($request, $role, array $conditions = [])
+    protected function loginUserAccountApp($request, $role, array $conditions = [], $auth = 'web')
     {
-        return $this->loginUserAccount($request, $role, true, $conditions);
+        return $this->loginUserAccount($request, $role, true, $conditions, $auth);
     }
 
     /**
@@ -158,42 +158,42 @@ class LoginController extends ApiController
      * @param array $conditions
      * @return \Illuminate\Http\JsonResponse
      */
-    protected function loginUserAccount($request, $role, $needsToken = true, array $conditions = [])
+    protected function loginUserAccount($request, $role, $needsToken = true, array $conditions = [], $auth)
     {
         
 
         if ($request->has('social_id')) {
             return $this->setLoginIdentifier('social_id')
-                ->loginUserWithSocialUniqueId($request, $role, $needsToken, $conditions);
+                ->loginUserWithSocialUniqueId($request, $role, $needsToken, $conditions, $auth);
         }
 
         if ($request->has(['mobile'])) {
             return $this->setLoginIdentifier('mobile')
-                ->loginUserWithMobile($request, $role, $needsToken, $conditions);
+                ->loginUserWithMobile($request, $role, $needsToken, $conditions, $auth);
         }
 
         if ($request->has(['email', 'password'])) {
             return $this->setLoginIdentifier('email')
-                ->loginUserWithPassword($request, $role, $needsToken, $conditions);
+                ->loginUserWithPassword($request, $role, $needsToken, $conditions, $auth);
         }
 
         if ($request->has('social_unique_id')) {
             return $this->setLoginIdentifier('social_unique_id')
-                ->loginUserWithSocialUniqueId($request, $role, $needsToken, $conditions);
+                ->loginUserWithSocialUniqueId($request, $role, $needsToken, $conditions, $auth);
         }
 
         if ($request->has(['mobile', 'password'])) {
             return $this->setLoginIdentifier('mobile')
-                ->loginUserWithPassword($request, $role, $needsToken, $conditions);
+                ->loginUserWithPassword($request, $role, $needsToken, $conditions, $auth);
         }
 
         if ($request->has(['username', 'password']) && $this->roleAllowedUsernameLogin($role)) {
             return $this->setLoginIdentifier('username')
-                ->loginUserWithPassword($request, $role, $needsToken, $conditions);
+                ->loginUserWithPassword($request, $role, $needsToken, $conditions, $auth);
         }
 
         if ($needsToken && $request->has(['mobile', 'otp']) && $this->roleAllowedOTPLogin($role)) {
-            return $this->loginUserWithOTP($request, $role, $needsToken, $conditions);
+            return $this->loginUserWithOTP($request, $role, $needsToken, $conditions, $auth);
         }
 
         return $this->respondBadRequest('Missing login credentials');
@@ -208,7 +208,7 @@ class LoginController extends ApiController
      * @param array $conditions
      * @return \Illuminate\Http\JsonResponse
      */
-    protected function loginUserWithMobile($request, $role, $needsToken = true, array $conditions = [])
+    protected function loginUserWithMobile($request, $role, $needsToken = true, array $conditions = [], $auth)
     {
         $user = null;
 
@@ -228,7 +228,7 @@ class LoginController extends ApiController
             $this->throwAccountDisabledException($identifier);
         }
 
-        return $this->authenticateAndRespond($user, $request, $needsToken);
+        return $this->authenticateAndRespond($user, $request, $needsToken, $auth);
     }
 
 
@@ -241,7 +241,7 @@ class LoginController extends ApiController
      * @param array $conditions
      * @return \Illuminate\Http\JsonResponse
      */
-    protected function loginUserWithPassword($request, $role, $needsToken = true, array $conditions = [])
+    protected function loginUserWithPassword($request, $role, $needsToken = true, array $conditions = [], $auth)
     {
         $user = null;
 
@@ -263,7 +263,7 @@ class LoginController extends ApiController
             $this->throwAccountDisabledException($identifier);
         }
 
-        return $this->authenticateAndRespond($user, $request, $needsToken);
+        return $this->authenticateAndRespond($user, $request, $needsToken, $auth);
     }
 
 
@@ -276,7 +276,7 @@ class LoginController extends ApiController
      * @param array $conditions
      * @return \Illuminate\Http\JsonResponse
      */
-    protected function loginUserWithSocialUniqueId($request, $role, $needsToken = true, array $conditions = [])
+    protected function loginUserWithSocialUniqueId($request, $role, $needsToken = true, array $conditions = [], $auth)
     {
         $user = null;
         $identifier = $this->getLoginIdentifier();
@@ -294,7 +294,7 @@ class LoginController extends ApiController
             $this->throwAccountDisabledException($identifier);
         }
 
-        return $this->authenticateAndRespond($user, $request, $needsToken);
+        return $this->authenticateAndRespond($user, $request, $needsToken, $auth);
     }
 
     /**
@@ -306,7 +306,7 @@ class LoginController extends ApiController
      * @param array $conditions
      * @return \Illuminate\Http\JsonResponse
      */
-    protected function loginUserWithOTP($request, $role, $needsToken = true, array $conditions = [])
+    protected function loginUserWithOTP($request, $role, $needsToken = true, array $conditions = [], $auth)
     {
         $mobile = $request->input('mobile');
         $otp = $request->input('otp');
@@ -327,7 +327,7 @@ class LoginController extends ApiController
 
         $this->otpHandler->delete();
 
-        return $this->authenticateAndRespond($user, $request, $needsToken);
+        return $this->authenticateAndRespond($user, $request, $needsToken, $auth);
     }
 
 
@@ -440,7 +440,7 @@ class LoginController extends ApiController
      * @param bool $needsToken
      * @return \Illuminate\Http\Response|\Illuminate\Http\JsonResponse
      */
-    protected function authenticateAndRespond(User $user, $request, $needsToken = false)
+    protected function authenticateAndRespond(User $user, $request, $needsToken = false, $auth)
     {
         event(new UserLogin($user));
         
@@ -498,7 +498,7 @@ class LoginController extends ApiController
         }
 
 
-        return $this->authenticateUser($user, $request->has('remember'));
+        return $this->authenticateUser($user, $request->has('remember'), $auth);
     }
 
     /**
@@ -520,9 +520,9 @@ class LoginController extends ApiController
      * @param bool $remember
      * @return \Illuminate\Http\JsonResponse
      */
-    protected function authenticateUser(User $user, $remember = false)
+    protected function authenticateUser(User $user, $remember = false, $auth)
     {
-        auth('web')->login($user, $remember);
+        auth($auth)->login($user, $remember);
         // return view('admin.index');
         return $this->respondSuccess();
     }
