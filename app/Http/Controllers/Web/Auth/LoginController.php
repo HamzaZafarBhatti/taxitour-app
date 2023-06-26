@@ -522,7 +522,7 @@ class LoginController extends ApiController
      */
     protected function authenticateUser(User $user, $remember = false)
     {
-        auth('api')->login($user, $remember);
+        auth('web')->login($user, $remember);
         // return view('admin.index');
         return $this->respondSuccess();
     }
@@ -536,7 +536,7 @@ class LoginController extends ApiController
      */
     protected function set(User $user, $remember = false)
     {
-        auth('api')->login($user, $remember);
+        auth('web')->login($user, $remember);
 
         return $this->respondSuccess();
     }
