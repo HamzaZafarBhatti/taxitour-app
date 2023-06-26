@@ -126,7 +126,7 @@ Route::middleware('auth:web')->group(function () {
     });
 
     // Driver Management
-    Route::group(['prefix' => 'company/drivers','namespace'=>'Company'], function () {
+    Route::group(['prefix' => 'company/drivers','namespace'=>'Company', 'as' => 'company.drivers'], function () {
         // prefix('drivers')->group(function () {
         Route::get('/', 'DriverController@index')->name('companyDriverView');
         Route::get('/fetch', 'DriverController@getAllDrivers');
@@ -216,7 +216,7 @@ Route::middleware('auth:web')->group(function () {
 
 //drivers
 
-    Route::group(['prefix' => 'drivers'], function () {
+    Route::group(['prefix' => 'drivers', 'as' => 'drivers'], function () {
         // prefix('drivers')->group(function () {
         Route::get('/', 'DriverController@index');
         Route::get('/fetch/approved', 'DriverController@getApprovedDrivers');
@@ -264,7 +264,7 @@ Route::middleware('auth:web')->group(function () {
 
 //Fleet drivers
 
-    Route::group(['prefix' => 'fleet-drivers'], function () {
+    Route::group(['prefix' => 'fleet-drivers', 'as' => 'fleet.drivers'], function () {
         // prefix('drivers')->group(function () {
         Route::get('/', 'FleetDriverController@index');
         Route::get('/fetch/approved', 'FleetDriverController@getApprovedFleetDrivers');
