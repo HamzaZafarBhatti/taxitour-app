@@ -111,7 +111,7 @@ class UserRegistrationController extends LoginController
 
                 $user = $this->user->belongsTorole(Role::USER)->where('email', $request->email)->first();
                 
-                return $this->authenticateAndRespond($user, $request, $needsToken=true);
+                return $this->authenticateAndRespond($user, $request, $needsToken=true, 'api');
 
             }
             $this->throwCustomException('Provided email has already been taken');
@@ -128,7 +128,7 @@ class UserRegistrationController extends LoginController
 
                 $user = $this->user->belongsTorole(Role::USER)->where('mobile', $mobile)->first();
 
-                return $this->authenticateAndRespond($user, $request, $needsToken=true);
+                return $this->authenticateAndRespond($user, $request, $needsToken=true, 'api');
 
             }
             $this->throwCustomException('Provided mobile has already been taken');
@@ -237,7 +237,7 @@ class UserRegistrationController extends LoginController
     /*mail Template*/
 
         if ($user) {
-            return $this->authenticateAndRespond($user, $request, $needsToken=true);
+            return $this->authenticateAndRespond($user, $request, $needsToken=true, 'api');
         }
         return $this->respondBadRequest('Unknown error occurred. Please try again later or contact us if it continues.');
 
