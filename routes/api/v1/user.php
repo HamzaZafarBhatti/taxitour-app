@@ -16,7 +16,7 @@ use App\Base\Constants\Auth\Role;
  * These routes use the root namespace 'App\Http\Controllers\Api\V1\User'.
  * These routes use the middleware group 'auth'.
  */
-Route::get('/user', 'User/AccountController@me');
+Route::get('/user', 'User\AccountController@me');
 Route::prefix('user')->namespace('User')->middleware('auth')->group(function () {
     // Get the logged in user.
     /**
