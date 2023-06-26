@@ -237,6 +237,8 @@ class UserRegistrationController extends LoginController
     /*mail Template*/
 
         if ($user) {
+            
+            session()->put('auth_guard', 'api');
             return $this->authenticateAndRespond($user, $request, $needsToken=true);
         }
         return $this->respondBadRequest('Unknown error occurred. Please try again later or contact us if it continues.');
