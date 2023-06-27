@@ -90,7 +90,7 @@
                                         <div class="form-group">
                                             <label for="image">@lang('view_pages.push_image')</label><br>
                                             <img id="blah" src="#" alt=""><br>
-                                            <input type="file" id="image" onchange="readURL(this)" name="image" style="display:none">
+                                            <input type="file" id="image" onchange="readURL(this)" name="image" style="display:none" required>
                                             <button class="btn btn-primary btn-sm" type="button" onclick="$('#image').click()" id="upload">@lang('view_pages.browse')</button>
                                             <button class="btn btn-danger btn-sm" type="button" id="remove_img" style="display: none;">@lang('view_pages.remove')</button><br>
                                             <span class="text-danger">{{ $errors->first('image') }}</span>
