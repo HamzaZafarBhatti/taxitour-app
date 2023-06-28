@@ -62,17 +62,17 @@ class AssignDriversForScheduledRides extends Command
             ->whereDate('trip_start_time', '<', date('Y-m-d H:i:s'))
             ->where('is_completed', 0)->where('is_cancelled', 0)->where('is_driver_started', 0)->get();
         Log::info($uncompleted_requests);
-        if ($uncompleted_requests) {
-            foreach ($uncompleted_requests as $uncompleted_request) {
-                $update_parms['is_cancelled'] = true;
-                $update_parms['cancelled_at'] = date('Y-m-d H:i:s');
-                $update_parms['cancel_method'] = 0;
+        // if ($uncompleted_requests) {
+        //     foreach ($uncompleted_requests as $uncompleted_request) {
+        //         $update_parms['is_cancelled'] = true;
+        //         $update_parms['cancelled_at'] = date('Y-m-d H:i:s');
+        //         $update_parms['cancel_method'] = 0;
 
-                $uncompleted_request->update($update_parms);
+        //         $uncompleted_request->update($update_parms);
 
-                // dd($uncompleted_request);
-            }
-        }
+        //         // dd($uncompleted_request);
+        //     }
+        // }
 
         $current_date = Carbon::now()->format('Y-m-d H:i:s');
 
