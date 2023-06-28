@@ -56,8 +56,10 @@ class AssignDriversForScheduledRides extends Command
      */
     public function handle()
     {
+        $current_date = Carbon::now()->format('Y-m-d H:i:s');
+
         $uncompleted_requests = Request::where('is_later', 1)
-            ->whereDate('trip_start_time', '<', date('Y-m-d H:i:s'))
+            ->whereDate('trip_start_time', '<', $current_date )
             ->where('is_completed', 0)->where('is_cancelled', 0)->where('is_driver_started', 0)->get();
         Log::info($uncompleted_requests);
         
@@ -73,7 +75,6 @@ class AssignDriversForScheduledRides extends Command
         //     }
         // }
 
-        $current_date = Carbon::now()->format('Y-m-d H:i:s');
 
         $findable_duration = get_settings('minimum_time_for_search_drivers_for_schedule_ride');
         if (!$findable_duration) {
