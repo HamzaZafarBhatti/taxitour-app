@@ -81,18 +81,12 @@ class AssignDriversForScheduledRides extends Command
             $findable_duration = 45;
         }
         $add_45_min = Carbon::now()->addMinutes($findable_duration)->format('Y-m-d H:i:s');
-        Log::info($current_date);
-        Log::info($add_45_min);
-        Log::info(Request::where('is_later', 1)
-            ->where('is_bid_ride', 0)
-            ->where('trip_start_time', '<=', $add_45_min)
-            ->where('trip_start_time', '>', $current_date)
-            ->where('is_completed', 0)->where('is_cancelled', 0)->where('is_driver_started', 0)->toSql());
+
         // DB::enableQueryLog();
         $requests = Request::where('is_later', 1)
             ->where('is_bid_ride', 0)
+            ->where('trip_start_time', '<', $current_date)
             ->where('trip_start_time', '<=', $add_45_min)
-            ->where('trip_start_time', '>', $current_date)
             ->where('is_completed', 0)->where('is_cancelled', 0)->where('is_driver_started', 0)->get();
 
         Log::info($requests);
