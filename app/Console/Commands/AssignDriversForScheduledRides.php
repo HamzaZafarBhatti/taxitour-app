@@ -89,7 +89,6 @@ class AssignDriversForScheduledRides extends Command
             ->where('trip_start_time', '<=', $add_45_min)
             ->where('is_completed', 0)->where('is_cancelled', 0)->where('is_driver_started', 0)->get();
 
-        Log::info($requests);
         if ($requests->count() == 0) {
             Log::info('No requests');
             return $this->info('no-schedule-rides-found');
