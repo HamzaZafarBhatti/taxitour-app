@@ -100,6 +100,7 @@ class AssignDriversForScheduledRides extends Command
             if ($request->requestMeta()->exists()) {
                 break;
             }
+            Log::info($request);
             // Get Drivers
             $pick_lat = $request->pick_lat;
             $pick_lng = $request->pick_lng;
@@ -120,6 +121,8 @@ class AssignDriversForScheduledRides extends Command
 
             $radius = kilometer_to_miles($driver_search_radius);
 
+            Log::info('radius');
+            Log::info($radius);
             $calculatable_radius = ($radius / 2);
 
             $calulatable_lat = 0.0144927536231884 * $calculatable_radius;
@@ -162,6 +165,8 @@ class AssignDriversForScheduledRides extends Command
 
             asort($firebase_drivers);
 
+            Log::info('firebase_drivers');
+            Log::info($firebase_drivers);
             if (!empty($firebase_drivers)) {
 
                 $nearest_driver_ids = [];
@@ -184,6 +189,9 @@ class AssignDriversForScheduledRides extends Command
                     //get line string from helper
                     $route_coordinates = get_line_string($request->pick_lat, $request->pick_lng, $request->drop_lat, $request->drop_lng);
                 }
+
+                Log::info('nearest_drivers');
+                Log::info($nearest_drivers);
                 if ($nearest_drivers->isEmpty()) {
                     $this->info('no-drivers-available');
                     // @TODO Update attempt to the requests
@@ -281,6 +289,8 @@ class AssignDriversForScheduledRides extends Command
                         $title = trans('push_notifications.new_request_title', [], $notifable_driver->lang);
                         $body = trans('push_notifications.new_request_body', [], $notifable_driver->lang);
 
+                        Log::info('notifable_driver');
+                        Log::info($notifable_driver);
                         dispatch(new SendPushNotification($notifable_driver, $title, $body));
 
                         // Form a socket sturcture using users'id and message with event name
