@@ -86,7 +86,7 @@ class AssignDriversForScheduledRides extends Command
         $requests = Request::where('is_later', 1)
             ->where('is_bid_ride', 0)
             ->where('trip_start_time', '<=', $add_45_min)
-            ->where('trip_start_time', '>', $current_date)
+            ->where('trip_start_time', '<', $current_date)
             ->where('is_completed', 0)->where('is_cancelled', 0)->where('is_driver_started', 0)->get();
 
         if ($requests->count() == 0) {
