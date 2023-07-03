@@ -143,9 +143,11 @@ class AssignDriversForScheduledRides extends Command
 
             $vehicle_type = $type_id;
 
+            Log::info($vehicle_type);
+
             $fire_drivers = $this->database->getReference('drivers')->orderByChild('g')->startAt($lower_hash)->endAt($higher_hash)->getValue();
 
-            Log::info('firebase_drivers');
+            Log::info('fire_drivers');
             Log::info($fire_drivers);
             $firebase_drivers = [];
 
@@ -172,6 +174,8 @@ class AssignDriversForScheduledRides extends Command
 
                     $distance = distance_between_two_coordinates($pick_lat, $pick_lng, $fire_driver['l'][0], $fire_driver['l'][1], 'K');
 
+                    Log::info($fire_driver['name']);
+                    Log::info($distance);
                     if ($distance <= $driver_search_radius) {
 
                         $firebase_drivers[$fire_driver['id']]['distance'] = $distance;
