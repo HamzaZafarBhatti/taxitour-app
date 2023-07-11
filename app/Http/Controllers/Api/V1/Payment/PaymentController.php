@@ -199,6 +199,7 @@ class PaymentController extends BaseController
      */
     public function walletHistory()
     {
+        return auth()->user()->id;
         if (access()->hasRole(Role::USER)) {
             $query = UserWalletHistory::where('user_id', auth()->user()->id);
             // $result = fractal($query, new UserWalletHistoryTransformer);
