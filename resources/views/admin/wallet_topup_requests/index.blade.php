@@ -33,15 +33,6 @@
                                 </button>
                             </div>
 
-                            @if (auth()->user()->can('add-admin'))
-                                <div class="col-md-7 text-center text-md-right">
-                                    <a href="{{ url('wallet_topup_requests/create') }}" class="btn btn-primary btn-sm">
-                                        <i class="mdi mdi-plus-circle mr-2"></i>@lang('view_pages.add_admin')</a>
-                                    <!--  <a class="btn btn-danger">
-                                        Export</a> -->
-                                </div>
-                            @endif
-
                         </div>
 
 

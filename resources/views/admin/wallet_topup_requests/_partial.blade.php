@@ -8,6 +8,18 @@
 
                         </span>
                     </th>
+                    <th> @lang('view_pages.user_name')/@lang('view_pages.driver_name')
+                        <span style="float: right;">
+                        </span>
+                    </th>
+                    <th> @lang('view_pages.amount')
+                        <span style="float: right;">
+                        </span>
+                    </th>
+                    <th> @lang('view_pages.ref_number')
+                        <span style="float: right;">
+                        </span>
+                    </th>
                     <th> @lang('view_pages.account_name')
                         <span style="float: right;">
                         </span>
@@ -24,7 +36,7 @@
                         <span style="float: right;">
                         </span>
                     </th>
-                    <th> @lang('view_pages.account_for')
+                    <th> @lang('view_pages.status')
                         <span style="float: right;">
                         </span>
                     </th>
@@ -50,25 +62,19 @@
                     @foreach ($results as $key => $result)
                         <tr>
                             <td>{{ $i++ }} </td>
-                            <td> {{ $result->name }}</td>
+                            <td> {{ $result->user->name }}</td>
+                            <td> {{ $result->amount }}</td>
+                            <td> {{ $result->ref_number }}</td>
+                            <td> {{ $result->account_name }}</td>
                             <td>{{ $result->id_number }}</td>
                             <td>{{ $result->bank_name }}</td>
                             <td>{{ $result->account_number }}</td>
-                            <td>{{ $result->account_for->getLabel() }}</td>
+                            <td>{{ $result->status->getLabel() }}</td>
                             <td>
                                 <button type="button" class="btn btn-info btn-sm dropdown-toggle"
                                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">@lang('view_pages.action')
                                 </button>
                                 <div class="dropdown-menu">
-                                    @if (auth()->user()->can('edit-admin'))
-                                        <a class="dropdown-item" href="{{ url('wallet_bank_accounts/edit', $result->id) }}">
-                                            <i class="fa fa-pencil"></i>@lang('view_pages.edit')</a>
-                                    @endif
-                                    @if (auth()->user()->can('delete-admin'))
-                                        <a class="dropdown-item sweet-delete" href="#"
-                                            data-url="{{ url('wallet_bank_accounts/delete', $result->id) }}">
-                                            <i class="fa fa-trash-o"></i>@lang('view_pages.delete')</a>
-                                    @endif
                                 </div>
                             </td>
                         </tr>

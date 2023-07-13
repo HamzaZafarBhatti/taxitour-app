@@ -38,7 +38,7 @@
                             
                             <div class="col-md-7 text-center text-md-right">
                                 <a href="{{ url('wallet_bank_accounts/create') }}" class="btn btn-primary btn-sm">
-                                    <i class="mdi mdi-plus-circle mr-2"></i>@lang('view_pages.add_admin')</a>
+                                    <i class="mdi mdi-plus-circle mr-2"></i>@lang('view_pages.add_wallet_account')</a>
                                 <!--  <a class="btn btn-danger">
                             Export</a> -->
                             </div>

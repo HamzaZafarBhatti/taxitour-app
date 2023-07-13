@@ -1,6 +1,7 @@
 <?php
 
 return array (
+  'ref_number' => 'Reference number',
   'account_name' => 'Account Name',
   'enter_account_name' => 'Enter Account Name',
   'id_number' => 'ID Number',
@@ -9,6 +10,7 @@ return array (
   'select_account_for' => 'Select Bank Account For',
   'enter_bank_name' => 'Enter Bank Name',
   'enter_account_number' => 'Enter Account Number',
+  'add_wallet_account' => 'Add Admin Bank Account',
   'back' => 'Back',
   'loading' => 'Loading...',
   'icons' => 'Icons',
