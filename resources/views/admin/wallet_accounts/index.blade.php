@@ -37,7 +37,7 @@
                             @if(auth()->user()->can('add-admin'))         
                             
                             <div class="col-md-7 text-center text-md-right">
-                                <a href="{{ url('admins/create') }}" class="btn btn-primary btn-sm">
+                                <a href="{{ url('wallet_bank_accounts/create') }}" class="btn btn-primary btn-sm">
                                     <i class="mdi mdi-plus-circle mr-2"></i>@lang('view_pages.add_admin')</a>
                                 <!--  <a class="btn btn-danger">
                             Export</a> -->
@@ -50,7 +50,7 @@
                     </div>
 
                     <div id="js-admin-partial-target">
-                        <include-fragment src="admins/fetch">
+                        <include-fragment src="wallet_bank_accounts/fetch">
                             <span style="text-align: center;font-weight: bold;">@lang('view_pages.loading')</span>
                         </include-fragment>
                     </div>
@@ -78,7 +78,7 @@
                     e.preventDefault();
                     search_keyword = $('#search_keyword').val();
                     console.log(search_keyword);
-                    fetch('admins/fetch?search=' + search_keyword)
+                    fetch('wallet_bank_accounts/fetch?search=' + search_keyword)
                         .then(response => response.text())
                         .then(html => {
                             document.querySelector('#js-admin-partial-target').innerHTML = html
@@ -109,7 +109,7 @@
                             cache: false,
                             success: function(res) {
 
-                                fetch('admins/fetch?search=' + search_keyword)
+                                fetch('wallet_bank_accounts/fetch?search=' + search_keyword)
                                     .then(response => response.text())
                                     .then(html => {
                                         document.querySelector('#js-admin-partial-target')

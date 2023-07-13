@@ -1,6 +1,9 @@
 <?php
 
 return array (
+  'account_name' => 'Account Name',
+  'id_number' => 'ID Number',
+  'account_for' => 'Bank Account For',
   'back' => 'Back',
   'loading' => 'Loading...',
   'icons' => 'Icons',

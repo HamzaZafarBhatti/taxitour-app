@@ -127,7 +127,7 @@ Route::middleware('auth:web')->group(function () {
 
     Route::group(['prefix' => 'wallet_bank_accounts', 'middleware' => 'permission:admin'], function () {
         Route::get('/', 'AdminBankAccountsController@index');
-        // Route::get('/fetch', 'AdminController@getAllAdmin');
+        Route::get('/fetch', 'AdminController@getAllAccounts');
         // Route::get('/create', 'AdminController@create');
         // Route::post('store', 'AdminController@store');
         // Route::get('edit/{admin}', 'AdminController@getById');

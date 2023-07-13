@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Web\Admin;
 
 use App\Http\Controllers\Web\BaseController;
 use App\Models\AdminBankAccounts;
+use App\Base\Libraries\QueryFilter\QueryFilterContract;
+use App\Base\Filters\Master\CommonMasterFilter;
 use Illuminate\Http\Request;
 
 class AdminBankAccountsController extends BaseController
@@ -20,74 +22,18 @@ class AdminBankAccountsController extends BaseController
 
         $main_menu = 'wallet_bank_accounts';
         $sub_menu = null;
-        $accounts = AdminBankAccounts::all();
 
-        return view('admin.wallet_accounts.index', compact('page', 'main_menu', 'sub_menu', 'accounts'));
+        return view('admin.wallet_accounts.index', compact('page', 'main_menu', 'sub_menu'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function getAllAccounts(QueryFilterContract $queryFilter)
     {
-        //
-    }
+        $url = request()->fullUrl(); //get full url
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
+        $query = AdminBankAccounts::query();
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\AdminBankAccounts  $adminBankAccounts
-     * @return \Illuminate\Http\Response
-     */
-    public function show(AdminBankAccounts $adminBankAccounts)
-    {
-        //
-    }
+        $results = $queryFilter->builder($query)->customFilter(new CommonMasterFilter)->paginate();
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\AdminBankAccounts  $adminBankAccounts
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(AdminBankAccounts $adminBankAccounts)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\AdminBankAccounts  $adminBankAccounts
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, AdminBankAccounts $adminBankAccounts)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\AdminBankAccounts  $adminBankAccounts
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(AdminBankAccounts $adminBankAccounts)
-    {
-        //
+        return view('admin.wallet_accounts._partial', compact('results'));
     }
 }
