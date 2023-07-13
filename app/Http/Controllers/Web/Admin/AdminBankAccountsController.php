@@ -81,6 +81,7 @@ class AdminBankAccountsController extends BaseController
     }
     public function getById($id)
     {
+        $account_fors = AdminBankAccountsAccountForEnum::cases();
 
         $item = AdminBankAccounts::findOrFail($id);
 
@@ -89,7 +90,7 @@ class AdminBankAccountsController extends BaseController
         $main_menu = 'admins';
         $sub_menu = null;
 
-        return view('admin.wallet_accounts.update', compact('item', 'page', 'main_menu', 'sub_menu'));
+        return view('admin.wallet_accounts.update', compact('item', 'page', 'main_menu', 'sub_menu', 'account_fors'));
     }
 
     public function update($id, Request $request)
