@@ -169,7 +169,7 @@ if(str_contains((string)request()->path(),'translations')){
         </a>
       </li>
       <li class="{{'wallet_bank_accounts' == $main_menu ? 'active' : '' }}">
-        <a href="{{route('wallet_bank_accounts.index')}}">
+        <a href="{{url('/wallet_bank_accounts')}}">
           <i class="fa fa-user-circle-o"></i> <span>@lang('pages_names.wallet_bank_accounts')</span>
         </a>
       </li>
