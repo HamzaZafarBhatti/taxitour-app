@@ -11,7 +11,6 @@
  */
 
 use App\Base\Constants\Auth\Role;
-use App\Http\Controllers\AdminBankAccountsController;
 
 /*
  * These routes are used for web authentication.
@@ -126,8 +125,8 @@ Route::middleware('auth:web')->group(function () {
 
     });
 
-    Route::controller(AdminBankAccountsController::class)->prefix('wallet_bank_accounts')->name('wallet_bank_accounts.')->group(['middleware' => 'permission:admin'], function () {
-        Route::get('/', 'index')->name('index');
+    Route::group(['prefix' => 'wallet_bank_accounts', 'middleware' => 'permission:admin'], function () {
+        Route::get('/', 'AdminBankAccountsController@index');
         // Route::get('/fetch', 'AdminController@getAllAdmin');
         // Route::get('/create', 'AdminController@create');
         // Route::post('store', 'AdminController@store');

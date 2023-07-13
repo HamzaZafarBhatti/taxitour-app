@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Web\Admin;
 
 use App\Models\AdminBankAccounts;
 use Illuminate\Http\Request;
