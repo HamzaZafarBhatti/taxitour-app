@@ -135,6 +135,11 @@ Route::middleware('auth:web')->group(function () {
         Route::get('delete/{id}', 'AdminBankAccountsController@delete');
     });
 
+    Route::group(['prefix' => 'wallet_topup_requests'], function () {
+        Route::get('/', 'WalletTopupRequestController@index');
+        Route::get('/fetch', 'WalletTopupRequestController@getAllRecords');
+    });
+
     // Driver Management
     Route::group(['prefix' => 'company/drivers','namespace'=>'Company'], function () {
         // prefix('drivers')->group(function () {

@@ -174,6 +174,11 @@ if(str_contains((string)request()->path(),'translations')){
         </a>
       </li>
       @endif
+      <li class="{{'wallet_topup_requests' == $main_menu ? 'active' : '' }}">
+        <a href="{{url('/wallet_topup_requests')}}">
+          <i class="fa fa-user-circle-o"></i> <span>@lang('pages_names.wallet_topup_requests')</span>
+        </a>
+      </li>
       {{--  @if(auth()->user()->can('view-requests'))
       <li class="{{'request' == $main_menu ? 'active' : '' }}">
         <a href="{{url('/requests')}}">

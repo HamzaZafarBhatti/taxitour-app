@@ -4,6 +4,7 @@ return array (
   'wallet_bank_accounts' => 'Wallet Bank Accounts',
   'add_wallet_bank_accounts' => 'Add Wallet Bank Account',
   'edit_wallet_bank_accounts' => 'Edit Wallet Bank Account',
+  'wallet_topup_requests' => 'Wallet Topup Requests',
   'dashboard' => 'Tablero',
   'roles' => 'Privilegios',
   'add_role' => 'Agregar rol',
