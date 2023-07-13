@@ -127,15 +127,15 @@ Route::middleware('auth:web')->group(function () {
 
     Route::group(['prefix' => 'wallet_bank_accounts', 'middleware' => 'permission:admin'], function () {
         Route::get('/', 'AdminBankAccountsController@index');
-        Route::get('/fetch', 'AdminController@getAllAccounts');
-        // Route::get('/create', 'AdminController@create');
-        // Route::post('store', 'AdminController@store');
-        // Route::get('edit/{admin}', 'AdminController@getById');
-        // Route::post('update/{admin}', 'AdminController@update');
-        // Route::get('toggle_status/{user}', 'AdminController@toggleStatus');
-        // Route::get('delete/{user}', 'AdminController@delete');
-        // Route::get('profile/{user}', 'AdminController@viewProfile');
-        // Route::post('profile/update/{user}', 'AdminController@updateProfile');
+        Route::get('/fetch', 'AdminBankAccountsController@getAllAccounts');
+        // Route::get('/create', 'AdminBankAccountsController@create');
+        // Route::post('store', 'AdminBankAccountsController@store');
+        // Route::get('edit/{admin}', 'AdminBankAccountsController@getById');
+        // Route::post('update/{admin}', 'AdminBankAccountsController@update');
+        // Route::get('toggle_status/{user}', 'AdminBankAccountsController@toggleStatus');
+        // Route::get('delete/{user}', 'AdminBankAccountsController@delete');
+        // Route::get('profile/{user}', 'AdminBankAccountsController@viewProfile');
+        // Route::post('profile/update/{user}', 'AdminBankAccountsController@updateProfile');
     });
 
     // Driver Management
