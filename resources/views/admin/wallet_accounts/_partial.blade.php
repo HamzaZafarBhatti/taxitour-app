@@ -66,7 +66,7 @@
                                     @endif
                                     @if (auth()->user()->can('delete-admin'))
                                         <a class="dropdown-item sweet-delete" href="#"
-                                            data-url="{{ url('wallet_bank_accounts/delete', $result->user->id) }}">
+                                            data-url="{{ url('wallet_bank_accounts/delete', $result->id) }}">
                                             <i class="fa fa-trash-o"></i>@lang('view_pages.delete')</a>
                                     @endif
                                 </div>
