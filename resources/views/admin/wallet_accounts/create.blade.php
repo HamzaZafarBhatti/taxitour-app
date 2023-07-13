@@ -34,7 +34,7 @@
                                             <select name="account_for" id="account_for" class="form-control" required>
                                                 <option value="" selected disabled>@lang('view_pages.select_account_for')</option>
                                                 @foreach ($account_fors as $item)
-                                                    <option value="{{ $item }}"
+                                                    <option value="{{ $item->value }}"
                                                         {{ old('account_for') == $item ? 'selected' : '' }}>
                                                         {{ $item->getLabel() }}
                                                     </option>
