@@ -24,7 +24,7 @@
                         </div>
                         <div class="col-sm-12">
                             <form method="post" class="form-horizontal"
-                                action="{{ url('wallet_bank_accounts/update, $item->id') }}">
+                                action="{{ url('wallet_bank_accounts/update', $item->id) }}">
                                 {{ csrf_field() }}
                                 <div class="row">
                                     <div class="col-sm-6">
