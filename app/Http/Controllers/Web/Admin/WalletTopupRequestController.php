@@ -27,7 +27,7 @@ class WalletTopupRequestController extends BaseController
     {
         $url = request()->fullUrl(); //get full url
 
-        $query = WalletTopupRequest::with('user')->query();
+        $query = WalletTopupRequest::query()->with('user');
 
         $results = $queryFilter->builder($query)->customFilter(new CommonMasterFilter)->paginate();
 
