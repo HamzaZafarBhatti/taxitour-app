@@ -35,7 +35,7 @@
                                                 <option value="" selected disabled>@lang('view_pages.select_account_for')</option>
                                                 @foreach ($account_fors as $item)
                                                     <option value="{{ $item->value }}"
-                                                        {{ old('account_for') == $item ? 'selected' : '' }}>
+                                                        {{ old('account_for') == $item->value ? 'selected' : '' }}>
                                                         {{ $item->getLabel() }}
                                                     </option>
                                                 @endforeach
@@ -77,8 +77,8 @@
                                         <div class="form-group">
                                             <label for="account_number">@lang('view_pages.account_number') <span
                                                     class="text-danger">*</span></label>
-                                            <input class="form-control" type="text" id="account_number" name="account_number"
-                                                value="{{ old('account_number') }}" required=""
+                                            <input class="form-control" type="text" id="account_number"
+                                                name="account_number" value="{{ old('account_number') }}" required=""
                                                 placeholder="@lang('view_pages.enter_account_number')">
                                             <span class="text-danger">{{ $errors->first('account_number') }}</span>
 
@@ -105,5 +105,4 @@
 
 @endsection
 
-<script>
-</script>
+<script></script>

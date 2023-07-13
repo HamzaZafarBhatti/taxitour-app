@@ -34,10 +34,10 @@
                                             </label>
                                             <select name="account_for" id="account_for" class="form-control" required>
                                                 <option value="" selected disabled>@lang('view_pages.select_account_for')</option>
-                                                @foreach ($account_fors as $item)
-                                                    <option value="{{ $item->value }}"
-                                                        {{ old('account_for', $item->account_for) == $item ? 'selected' : '' }}>
-                                                        {{ $item->getLabel() }}
+                                                @foreach ($account_fors as $account_for)
+                                                    <option value="{{ $account_for->value }}"
+                                                        {{ old('account_for', $item->account_for->value) == $account_for->value ? 'selected' : '' }}>
+                                                        {{ $account_for->getLabel() }}
                                                     </option>
                                                 @endforeach
                                             </select>
@@ -48,7 +48,8 @@
                                             <label for="name">@lang('view_pages.account_name') <span
                                                     class="text-danger">*</span></label>
                                             <input class="form-control" type="text" id="name" name="name"
-                                                value="{{ old('name', $item->name) }}" required="" placeholder="@lang('view_pages.enter_account_name')">
+                                                value="{{ old('name', $item->name) }}" required=""
+                                                placeholder="@lang('view_pages.enter_account_name')">
                                             <span class="text-danger">{{ $errors->first('name') }}</span>
                                         </div>
                                     </div>
@@ -79,7 +80,8 @@
                                             <label for="account_number">@lang('view_pages.account_number') <span
                                                     class="text-danger">*</span></label>
                                             <input class="form-control" type="text" id="account_number"
-                                                name="account_number" value="{{ old('account_number', $item->account_number) }}" required=""
+                                                name="account_number"
+                                                value="{{ old('account_number', $item->account_number) }}" required=""
                                                 placeholder="@lang('view_pages.enter_account_number')">
                                             <span class="text-danger">{{ $errors->first('account_number') }}</span>
 
