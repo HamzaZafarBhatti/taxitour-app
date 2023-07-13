@@ -23,7 +23,7 @@ class WalletTopupRequestController extends BaseController
         return view('admin.wallet_topup_requests.index', compact('page', 'main_menu', 'sub_menu'));
     }
 
-    public function getAllAccounts(QueryFilterContract $queryFilter)
+    public function getAllRecords(QueryFilterContract $queryFilter)
     {
         $url = request()->fullUrl(); //get full url
 
