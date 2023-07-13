@@ -130,12 +130,9 @@ Route::middleware('auth:web')->group(function () {
         Route::get('/fetch', 'AdminBankAccountsController@getAllAccounts');
         Route::get('/create', 'AdminBankAccountsController@create');
         Route::post('store', 'AdminBankAccountsController@store');
-        // Route::get('edit/{admin}', 'AdminBankAccountsController@getById');
-        // Route::post('update/{admin}', 'AdminBankAccountsController@update');
-        // Route::get('toggle_status/{user}', 'AdminBankAccountsController@toggleStatus');
-        // Route::get('delete/{user}', 'AdminBankAccountsController@delete');
-        // Route::get('profile/{user}', 'AdminBankAccountsController@viewProfile');
-        // Route::post('profile/update/{user}', 'AdminBankAccountsController@updateProfile');
+        Route::get('edit/{id}', 'AdminBankAccountsController@getById');
+        Route::post('update/{id}', 'AdminBankAccountsController@update');
+        Route::get('delete/{id}', 'AdminBankAccountsController@delete');
     });
 
     // Driver Management
