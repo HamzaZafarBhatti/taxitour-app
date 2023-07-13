@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers\Web\Admin;
 
+use App\Http\Controllers\Web\BaseController;
 use App\Models\AdminBankAccounts;
 use Illuminate\Http\Request;
 
-class AdminBankAccountsController extends Controller
+class AdminBankAccountsController extends BaseController
 {
     /**
      * Display a listing of the resource.
