@@ -195,6 +195,11 @@ class PaymentController extends BaseController
         return $this->respondSuccess($result, 'money_added_successfully');
     }
 
+    public function topMoneyToWallet(AddMoneyToWalletRequest $request)
+    {
+        
+    }
+
     /**
      * Wallet history
      * @responseFile responses/payment/wallet_added_history.json

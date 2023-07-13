@@ -40,6 +40,8 @@ Route::prefix('payment')->namespace('Payment')->middleware('auth')->group(functi
             Route::get('withdrawal-requests', 'PaymentController@withDrawalRequests');
             Route::post('request-for-withdrawal', 'PaymentController@requestForWithdrawal');
             Route::post('transfer-money-from-wallet', 'PaymentController@transferMoneyFromWallet');
+            Route::get('topup/requests', 'WalletTopupRequestController@index');
+            Route::post('topup/money', 'WalletTopupRequestController@store');
 
         });
 
