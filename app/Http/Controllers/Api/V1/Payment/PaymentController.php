@@ -21,6 +21,7 @@ use App\Models\Payment\WalletWithdrawalRequest;
 use App\Http\Controllers\Api\V1\BaseController;
 use App\Base\Constants\Masters\WithdrawalRequestStatus;
 use App\Base\Constants\Setting\Settings;
+use App\Enum\AdminBankAccountsAccountForEnum;
 use App\Models\Payment\OwnerWalletHistory;
 use App\Transformers\Payment\OwnerWalletHistoryTransformer;
 use App\Models\Payment\UserWallet;
@@ -28,6 +29,7 @@ use App\Models\Payment\DriverWallet;
 use App\Models\Payment\OwnerWallet;
 use App\Jobs\Notifications\AndroidPushNotification;
 use App\Jobs\Notifications\SendPushNotification;
+use App\Models\AdminBankAccounts;
 
 /**
  * @group Payment
@@ -206,7 +208,7 @@ class PaymentController extends BaseController
 
             $user_wallet = auth()->user()->userWallet;
 
-            $wallet_balance = number_format($user_wallet->amount_balance,2);
+            $wallet_balance = number_format($user_wallet->amount_balance, 2);
 
             $currency_code = auth()->user()->countryDetail->currency_code;
             $currency_symbol = auth()->user()->countryDetail->currency_symbol;
@@ -218,7 +220,6 @@ class PaymentController extends BaseController
             if ($default_card) {
                 $default_card_id = $default_card->id;
             }
-
         } elseif (access()->hasRole(Role::DRIVER)) {
             $query = DriverWalletHistory::where('user_id', auth()->user()->driver->id)->orderBy('created_at', 'desc');
             $result = filter($query, new DriverWalletHistoryTransformer)->defaultSort('-created_at')->paginate();
@@ -248,10 +249,8 @@ class PaymentController extends BaseController
             if (!$owner_wallet) {
 
                 $wallet_balance = 0;
-
             } else {
                 $wallet_balance = $owner_wallet->amount_balance;
-
             }
 
             $currency_code = auth()->user()->countryDetail->currency_code;
@@ -286,11 +285,9 @@ class PaymentController extends BaseController
         if (get_settings(Settings::STRIPE_ENVIRONMENT) == 'test') {
 
             $stripe_environment = 'test';
-
         } else {
 
             $stripe_environment = 'production';
-
         }
         if (get_settings(Settings::ENABLE_STRIPE) == 1) {
 
@@ -354,7 +351,22 @@ class PaymentController extends BaseController
         $paystack_test_publishable_key = get_settings(Settings::PAYSTACK_TEST_PUBLISHABLE_KEY);
         $paystack_live_publishable_key = get_settings(Settings::PAYSTACK_PRODUCTION_PUBLISHABLE_KEY);
 
-        return response()->json(['success' => true,
+        //Bank Account Details
+        if (access()->hasRole(Role::USER)) {
+            $account = AdminBankAccounts::where('account_for', AdminBankAccountsAccountForEnum::USER)->first();
+        } else if (access()->hasRole(Role::DRIVER)) {
+            $account = AdminBankAccounts::where('account_for', AdminBankAccountsAccountForEnum::DRIVER)->first();
+        }
+        $bank_details = [
+            'account_name' => $account->name ?? null,
+            'id_number' => $account->id_number ?? null,
+            'bank_name' => $account->bank_name ?? null,
+            'account_number' => $account->account_number ?? null,
+        ];
+
+
+        return response()->json([
+            'success' => true,
             'message' => 'wallet_history_listed',
             'wallet_balance' => $wallet_balance,
             'default_card_id' => $default_card_id,
@@ -364,7 +376,7 @@ class PaymentController extends BaseController
             'braintree_tree' => $enable_brain_tree,
             'stripe' => $enable_stripe,
             'razor_pay' => $enable_razor_pay,
-            'khalti_pay'=>$enable_khalti_pay,
+            'khalti_pay' => $enable_khalti_pay,
             'paystack' => $enable_paystack,
             'cash_free' => $enable_cashfree,
             'flutter_wave' => $enable_flutter_wave,
@@ -388,8 +400,7 @@ class PaymentController extends BaseController
             'cashfree_environment' => get_settings(Settings::CASH_FREE_ENVIRONMENT),
             'cashfree_test_app_id' => get_settings(Settings::CASH_FREE_TEST_APP_ID),
             'cashfree_live_app_id' => get_settings(Settings::CASH_FREE_PRODUCTION_APP_ID),
-
-
+            'bank_account_details' => $bank_details
         ]);
 
         // return $this->respondSuccess($result, 'wallet_history_listed');
@@ -413,8 +424,6 @@ class PaymentController extends BaseController
 
             $user_wallet = auth()->user()->userWallet;
             $wallet_balance = $user_wallet->amount_balance;
-
-
         } elseif (access()->hasRole(Role::DRIVER)) {
 
             $user = auth()->user()->driver;
@@ -429,7 +438,6 @@ class PaymentController extends BaseController
             $driver_wallet = auth()->user()->driver->driverWallet;
 
             $wallet_balance = $driver_wallet->amount_balance;
-
         } else {
 
             $user = auth()->user()->owner;
@@ -447,7 +455,6 @@ class PaymentController extends BaseController
         }
 
         return response()->json(['success' => true, 'message' => 'withdrawal-requests-listed', 'withdrawal_history' => $result, 'wallet_balance' => $wallet_balance]);
-
     }
 
 
@@ -480,19 +487,16 @@ class PaymentController extends BaseController
             if ($wallet_balance <= 0) {
 
                 $this->throwCustomException('Your wallet balance is too low');
-
             }
             if ($wallet_balance < $request->requested_amount) {
 
                 $this->throwCustomException('Your wallet balance is too low than your requested amount');
-
             }
 
             $user_info->withdrawalRequestsHistory()->where('status', WithdrawalRequestStatus::REQUESTED)->exists();
             if ($user_info) {
                 $this->throwCustomException('You cannot make multiple request. please wait for your existing request approval');
             }
-
         } elseif (access()->hasRole(Role::DRIVER)) {
 
             $user_info = auth()->user()->driver;
@@ -511,13 +515,11 @@ class PaymentController extends BaseController
             if ($wallet_balance <= 0) {
 
                 $this->throwCustomException('Your wallet balance is too low');
-
             }
 
             if ($wallet_balance < $request->requested_amount) {
 
                 $this->throwCustomException('Yout wallet balance is too low than your requested amount');
-
             }
 
             // $user_info->withdrawalRequestsHistory()->where('status',0)->exists();
@@ -527,7 +529,6 @@ class PaymentController extends BaseController
             if ($exists_request == true) {
                 $this->throwCustomException('You cannot make multiple request. please wait for your existing request approval');
             }
-
         } else {
 
             $user_info = auth()->user()->owner;
@@ -546,13 +547,11 @@ class PaymentController extends BaseController
             if ($wallet_balance <= 0) {
 
                 $this->throwCustomException('Your wallet balance is too low');
-
             }
 
             if ($wallet_balance < $request->requested_amount) {
 
                 $this->throwCustomException('Yout wallet balance is too low than your requested amount');
-
             }
 
             // $user_info->withdrawalRequestsHistory()->where('status',0)->exists();
@@ -562,15 +561,12 @@ class PaymentController extends BaseController
             if ($exists_request == true) {
                 $this->throwCustomException('You cannot make multiple request. please wait for your existing request approval');
             }
-
         }
 
 
         WalletWithdrawalRequest::create($created_params);
 
         return $this->respondSuccess(null, 'wallet_withdrawal_requested');
-
-
     }
 
     /**
@@ -580,7 +576,7 @@ class PaymentController extends BaseController
      * @bodyParam amount amount required role of the user
      *
      * */
-   public function transferMoneyFromWallet(Request $request)
+    public function transferMoneyFromWallet(Request $request)
     {
         $request->validate([
             'mobile' => 'required|min:10',
@@ -588,12 +584,11 @@ class PaymentController extends BaseController
             'amount' => 'required'
         ]);
         $user = auth()->user();
-      
+
         if ($request->mobile == $user->mobile) {
 
             //Throw exception
             $this->throwCustomException('Invalid Mobile Number');
-
         }
         if (access()->hasRole('user')) {
             $wallet_model = new UserWallet();
@@ -617,7 +612,6 @@ class PaymentController extends BaseController
 
             //Throw exception
             $this->throwCustomException('Insufficient balance to transfer money to wallet');
-
         }
 
         $mobile_number = $request->mobile;
@@ -644,7 +638,7 @@ class PaymentController extends BaseController
         if ($role == 'user') {
 
             $receiver_wallet = $receiver_user->userWallet;
-            if($receiver_wallet==null){
+            if ($receiver_wallet == null) {
                 $this->throwCustomException('This user Does Not have an E-Wallet');
             }
             $receiver_wallet_history_model = new UserWalletHistory();
@@ -658,11 +652,10 @@ class PaymentController extends BaseController
                 'is_credit' => true,
                 'remarks' => 'transferred-from-' . $user->name
             ]);
-
         } elseif ($role == 'driver') {
 
             $receiver_wallet = $receiver_user->driver->driverWallet;
-            if($receiver_wallet==null){
+            if ($receiver_wallet == null) {
                 $this->throwCustomException('This user Does Not have an E-Wallet');
             }
             $receiver_wallet_history_model = new DriverWalletHistory();
@@ -676,11 +669,10 @@ class PaymentController extends BaseController
                 'is_credit' => true,
                 'remarks' => 'transferred-from-' . $user->name
             ]);
-
         } elseif ($role == 'owner') {
 
             $receiver_wallet = $receiver_user->owner->ownerWalletDetail;
-            if($receiver_wallet==null){
+            if ($receiver_wallet == null) {
                 $this->throwCustomException('This user Does Not have an E-Wallet');
             }
             $receiver_wallet_history_model = new OwnerWalletHistory();
@@ -694,14 +686,13 @@ class PaymentController extends BaseController
                 'is_credit' => true,
                 'remarks' => 'transferred-from-' . $user->name
             ]);
-
         }
 
         $title = trans('push_notifications.you_have_received_a_money_from_title', [], $receiver_user->lang);
 
         $body = trans('push_notifications.you_have_received_a_money_from_body', [], $receiver_user->lang);
 
-        dispatch(new SendPushNotification($receiver_user,$title,$body));
+        dispatch(new SendPushNotification($receiver_user, $title, $body));
 
         $user_wallet->amount_spent -= $amount_to_transfer;
         $user_wallet->amount_balance -= $amount_to_transfer;
@@ -712,10 +703,11 @@ class PaymentController extends BaseController
             'amount' => $request->amount,
             'transaction_id' => $transaction_id,
             'remarks' => 'transfered-to-' . $receiver_user->name,
-            'is_credit' => false]);
+            'is_credit' => false
+        ]);
         $transfer_remarks = $wallet_history_model->update(['remarks']);
         $receiver_remarks = $receiver_wallet_history_model->update(['remarks']);
-//        return $this->respondSuccess($remarks, 'transferred');
+        //        return $this->respondSuccess($remarks, 'transferred');
         return response()->json(['success' => true, 'transfer_remarks' => $transfer_remarks, 'receiver_remarks' => $receiver_remarks]);
     }
 }
