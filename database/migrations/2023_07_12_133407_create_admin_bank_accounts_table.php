@@ -15,6 +15,11 @@ class CreateAdminBankAccountsTable extends Migration
     {
         Schema::create('admin_bank_accounts', function (Blueprint $table) {
             $table->id();
+            $table->string('name');
+            $table->string('id_number');
+            $table->string('bank_name');
+            $table->string('account_number');
+            $table->enum('account_for', ['driver', 'user']);
             $table->timestamps();
         });
     }

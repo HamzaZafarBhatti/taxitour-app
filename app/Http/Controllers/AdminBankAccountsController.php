@@ -15,6 +15,13 @@ class AdminBankAccountsController extends Controller
     public function index()
     {
         //
+        $page = trans('pages_names.wallet_bank_accounts');
+
+        $main_menu = 'wallet_bank_accounts';
+        $sub_menu = null;
+        $accounts = AdminBankAccounts::all();
+
+        return view('admin.wallet_accounts.index', compact('page', 'main_menu', 'sub_menu', 'accounts'));
     }
 
     /**

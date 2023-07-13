@@ -1,6 +1,7 @@
 <?php
 
 return array (
+  'wallet_bank_accounts' => 'Wallet Bank Accounts',
   'my_profile' => 'My Profile',
   'logout' => 'Logout',
   'settings' => 'Configurations',

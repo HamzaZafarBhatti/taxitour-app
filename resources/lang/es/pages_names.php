@@ -1,6 +1,7 @@
 <?php
 
 return array (
+  'wallet_bank_accounts' => 'Wallet Bank Accounts',
   'dashboard' => 'Tablero',
   'roles' => 'Privilegios',
   'add_role' => 'Agregar rol',

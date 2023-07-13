@@ -11,6 +11,7 @@
  */
 
 use App\Base\Constants\Auth\Role;
+use App\Http\Controllers\AdminBankAccountsController;
 
 /*
  * These routes are used for web authentication.
@@ -123,6 +124,19 @@ Route::middleware('auth:web')->group(function () {
         Route::post('upload/document/{fleet}/{needed_document}', 'FleetDocumentController@uploadDocument')->name('updateFleetDocument');
         Route::post('approve/documents', 'FleetDocumentController@approveFleetDocument')->name('approveFleetDocument');
 
+    });
+
+    Route::controller(AdminBankAccountsController::class)->prefix('wallet_bank_accounts')->name('wallet_bank_accounts.')->group(['middleware' => 'permission:admin'], function () {
+        Route::get('/', 'index')->name('index');
+        // Route::get('/fetch', 'AdminController@getAllAdmin');
+        // Route::get('/create', 'AdminController@create');
+        // Route::post('store', 'AdminController@store');
+        // Route::get('edit/{admin}', 'AdminController@getById');
+        // Route::post('update/{admin}', 'AdminController@update');
+        // Route::get('toggle_status/{user}', 'AdminController@toggleStatus');
+        // Route::get('delete/{user}', 'AdminController@delete');
+        // Route::get('profile/{user}', 'AdminController@viewProfile');
+        // Route::post('profile/update/{user}', 'AdminController@updateProfile');
     });
 
     // Driver Management

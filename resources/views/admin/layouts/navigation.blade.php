@@ -168,6 +168,11 @@ if(str_contains((string)request()->path(),'translations')){
           <i class="fa fa-user-circle-o"></i> <span>@lang('pages_names.admins')</span>
         </a>
       </li>
+      <li class="{{'wallet_bank_accounts' == $main_menu ? 'active' : '' }}">
+        <a href="{{route('wallet_bank_accounts.index')}}">
+          <i class="fa fa-user-circle-o"></i> <span>@lang('pages_names.wallet_bank_accounts')</span>
+        </a>
+      </li>
       @endif
       {{--  @if(auth()->user()->can('view-requests'))
       <li class="{{'request' == $main_menu ? 'active' : '' }}">
