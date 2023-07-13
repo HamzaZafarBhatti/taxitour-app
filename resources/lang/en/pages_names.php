@@ -2,6 +2,7 @@
 
 return array (
   'wallet_bank_accounts' => 'Wallet Bank Accounts',
+  'add_wallet_bank_accounts' => 'Add Wallet Bank Account',
   'my_profile' => 'My Profile',
   'logout' => 'Logout',
   'settings' => 'Configurations',

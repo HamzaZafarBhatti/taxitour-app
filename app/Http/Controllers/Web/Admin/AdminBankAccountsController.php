@@ -6,6 +6,7 @@ use App\Http\Controllers\Web\BaseController;
 use App\Models\AdminBankAccounts;
 use App\Base\Libraries\QueryFilter\QueryFilterContract;
 use App\Base\Filters\Master\CommonMasterFilter;
+use App\Enum\AdminBankAccountsAccountForEnum;
 use Illuminate\Http\Request;
 
 class AdminBankAccountsController extends BaseController
@@ -35,5 +36,47 @@ class AdminBankAccountsController extends BaseController
         $results = $queryFilter->builder($query)->customFilter(new CommonMasterFilter)->paginate();
 
         return view('admin.wallet_accounts._partial', compact('results'));
+    }
+    /**
+     * Create Admins View
+     *
+     */
+    public function create()
+    {
+        $page = trans('pages_names.add_wallet_bank_accounts');
+
+        $account_fors = AdminBankAccountsAccountForEnum::cases();
+
+        $main_menu = 'admin';
+        $sub_menu = null;
+
+        return view('admin.wallet_accounts.create', compact('page', 'main_menu', 'sub_menu', 'account_fors'));
+    }
+
+    /**
+     * Store admin.
+     *
+     * @param \App\Http\Requests\Admin\Driver\CreateDriverRequest $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function store(Request $request)
+    {
+        $data = $request->validate([
+            'account_for' => 'required',
+            'name' => 'required',
+            'id_number' => 'required',
+            'bank_name' => 'required',
+            'account_number' => 'required',
+        ]);
+        if (env('APP_FOR') == 'demo') {
+            $message = trans('succes_messages.you_are_not_authorised');
+
+            return redirect('wallet_bank_accounts')->with('warning', $message);
+        }
+
+        AdminBankAccounts::create($data);
+
+        $message = trans('succes_messages.wallet_added_succesfully');
+        return redirect('wallet_bank_accounts')->with('success', $message);
     }
 }

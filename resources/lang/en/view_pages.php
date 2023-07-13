@@ -2,8 +2,13 @@
 
 return array (
   'account_name' => 'Account Name',
+  'enter_account_name' => 'Enter Account Name',
   'id_number' => 'ID Number',
+  'enter_id_number' => 'Enter ID Number',
   'account_for' => 'Bank Account For',
+  'select_account_for' => 'Select Bank Account For',
+  'enter_bank_name' => 'Enter Bank Name',
+  'enter_account_number' => 'Enter Account Number',
   'back' => 'Back',
   'loading' => 'Loading...',
   'icons' => 'Icons',
