@@ -95,6 +95,7 @@ class AdminBankAccountsController extends BaseController
 
     public function update($id, Request $request)
     {
+        $item = AdminBankAccounts::findOrFail($id);
         $data = $request->validate([
             'account_for' => 'required',
             'name' => 'required',
@@ -103,53 +104,28 @@ class AdminBankAccountsController extends BaseController
             'account_number' => 'required',
         ]);
 
-        return $data;
-
         if (env('APP_FOR') == 'demo') {
             $message = trans('succes_messages.you_are_not_authorised');
-
-            return redirect('admins')->with('warning', $message);
+            return redirect('wallet_bank_accounts')->with('warning', $message);
         }
 
-        $updatedParams = $request->only(['service_location_id', 'first_name', 'mobile', 'email', 'address', 'state', 'city', 'country']);
-        $updatedParams['pincode'] = $request->postal_code;
 
+        $item->update($data);
 
-        $updated_user_params = [
-            'name' => $request->input('first_name') . ' ' . $request->input('last_name'),
-            'email' => $request->input('email'),
-            'mobile' => $request->input('mobile'),
-            'password' => bcrypt($request->input('password'))
-        ];
-
-        if ($uploadedFile = $this->getValidatedUpload('profile_picture', $request)) {
-            $updated_user_params['profile_picture'] = $this->imageUploader->file($uploadedFile)
-                ->saveProfilePicture();
-        }
-
-        $admin->user->update($updated_user_params);
-
-        $admin->user->roles()->detach();
-
-        $admin->user->attachRole($request->role);
-
-        $admin->update($updatedParams);
-
-        $message = trans('succes_messages.admin_updated_succesfully');
-        return redirect('admins')->with('success', $message);
+        $message = trans('succes_messages.wallet_updated_succesfully');
+        return redirect('wallet_bank_accounts')->with('success', $message);
     }
-    public function delete(User $user)
+    public function delete($id)
     {
+        $item = AdminBankAccounts::findOrFail($id);
         if (env('APP_FOR') == 'demo') {
-
-            $message = 'you cannot perform this action due to demo version';
-
+            $message = trans('succes_messages.you_are_not_authorised');
             return $message;
         }
-        $user->delete();
 
-        $message = trans('succes_messages.admin_deleted_succesfully');
+        $item->delete();
 
+        $message = trans('succes_messages.wallet_deleted_succesfully');
         return $message;
         // return redirect('admins')->with('success', $message);
     }

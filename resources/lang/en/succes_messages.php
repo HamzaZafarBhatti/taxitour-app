@@ -2,6 +2,8 @@
 
 return array (
   'wallet_added_succesfully' => 'Admin Bank Account Added Successfully',
+  'wallet_updated_succesfully' => 'Admin Bank Account Update Successfully',
+  'wallet_deleted_succesfully' => 'Admin Bank Account Delete Successfully',
   'department_added_succesfully' => 'Department Added Successfully',
   'you_are_not_authorised' => 'You Are Not Authorised To Update The Settings',
   'driver_added_succesfully' => 'Driver Added Successfully',

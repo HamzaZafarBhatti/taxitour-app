@@ -1,6 +1,9 @@
 <?php
 
 return array (
+  'wallet_added_succesfully' => 'Admin Bank Account Added Successfully',
+  'wallet_updated_succesfully' => 'Admin Bank Account Update Successfully',
+  'wallet_deleted_succesfully' => 'Admin Bank Account Delete Successfully',
   'system_settings_updated' => 'System Settings Updated Succesfully',
   'permission_assigned_succesfully' => 'Permission Assigned Succesfully',
   'type_added_succesfully' => 'Type Added Succesfully',
